@@ -29,6 +29,7 @@ namespace Keepr.Controllers
       }
     }
 
+    [Authorize]
     [HttpGet("{id}")]
     public virtual ActionResult<T> Get(int id)
     {
@@ -63,11 +64,11 @@ namespace Keepr.Controllers
     {
       try
       {
-          return Ok(_service.Edit(data, id));
+        return Ok(_service.Edit(data, id));
       }
       catch (Exception e)
       {
-          return BadRequest(e.Message);
+        return BadRequest(e.Message);
       }
     }
 

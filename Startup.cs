@@ -60,6 +60,9 @@ namespace Keepr
       services.AddTransient<AccountRepository>();
       services.AddTransient<AccountService>();
 
+      // BaseApi
+      
+
 
     }
 

@@ -25,12 +25,12 @@ CREATE TABLE vault (
     PRIMARY KEY (vault_id)
 );
 
-CREATE TABLE keep (
+CREATE TABLE `keep` (
     keep_id int NOT NULL AUTO_INCREMENT,
     keep_name VARCHAR(255) NOT NULL,
     keep_description VARCHAR(255) NOT NULL,
     user_id VARCHAR(255),
-    img_url VARCHAR(255),
+    keep_img_url VARCHAR(255),
     keep_private TINYINT(1) UNSIGNED,
     keep_view_count INT DEFAULT 0,
     keep_share_count INT DEFAULT 0,
