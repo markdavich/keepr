@@ -4,24 +4,35 @@ using Keepr.Repositories;
 
 namespace Keepr.Services
 {
-    public abstract class BaseApiService<T, Tid>
+  public abstract class BaseApiService<T>
+  {
+    private readonly BaseApiRepository<T> _repo;
+    public BaseApiService(BaseApiRepository<T> repo)
     {
-        private readonly BaseApiRepository<T, Tid> _repo;
-        public BaseApiService(BaseApiRepository<T, Tid> repo)
-        {
-            _repo = repo;
-        }
-
-        public virtual IEnumerable<T> Get()
-        {
-            return _repo.Get();
-        }
-
-        public virtual T Get(Tid id)
-        {
-            T exists = _repo.Get(id);
-            if (exists == null) { throw new Exception("Invalid Id"); }
-            return exists;
-        }
+      _repo = repo;
     }
+
+    public virtual IEnumerable<T> Get()
+    {
+      return _repo.Get();
+    }
+
+    public virtual T Get(int id)
+    {
+      T exists = _repo.Get(id);
+      if (exists == null) { throw new Exception("Invalid Id"); }
+      return exists;
+    }
+
+    public virtual int Create(T data, string user_id)
+    {
+      return _repo.Create(data, user_id);
+    }
+
+    public virtual T Edit(T data, int id)
+    {
+      // Need to change tablename_id to id
+      _repo.Edit(data, id);
+    }
+  }
 }
