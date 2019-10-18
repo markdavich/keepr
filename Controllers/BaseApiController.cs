@@ -29,7 +29,6 @@ namespace Keepr.Controllers
       }
     }
 
-    [Authorize]
     [HttpGet("{id}")]
     public virtual ActionResult<T> Get(int id)
     {

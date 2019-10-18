@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Components;
 
 namespace Keepr.Controllers
 {
-  [Route("/api/[controller]")]
-  public class KeepController: BaseApiController<Keep>
+  [Route("api/[controller]")]
+  public class KeepsController : BaseApiController<Keep>
   {
-    public KeepController(BaseApiService<Keep> service) : base(service)
+    public KeepsController(BaseApiService<Keep> service) : base(service)
     {
-      
+
     }
   }
 }

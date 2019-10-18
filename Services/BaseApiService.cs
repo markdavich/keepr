@@ -32,7 +32,7 @@ namespace Keepr.Services
     public virtual T Edit(T data, int id)
     {
       // Need to change tablename_id to id
-      _repo.Edit(data, id);
+      return _repo.Edit(data, id);
     }
   }
 }
