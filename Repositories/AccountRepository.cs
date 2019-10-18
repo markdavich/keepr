@@ -15,22 +15,22 @@ namespace Keepr.Repositories
       //generate the user user_id
       //HASH THE PASSWORD
       string sql = @"
-                INSERT INTO users 
-                (user_id, username, email, hash)
+                INSERT INTO user 
+                (user_id, user_username, user_email, user_hash)
                 VALUES 
-                (@user_id, @username, @email, @Hash)";
+                (@user_id, @user_username, @user_email, @user_hash)";
       _db.Execute(sql, user);
     }
 
-    internal User GetUserByEmail(string email)
+    internal User GetUserByEmail(string user_email)
     {
-      string sql = "SELECT * FROM users WHERE email = @email";
-      return _db.QueryFirstOrDefault<User>(sql, new { email });
+      string sql = "SELECT * FROM user WHERE email = @user_email";
+      return _db.QueryFirstOrDefault<User>(sql, new { user_email });
     }
 
     internal User GetUserById(string user_id)
     {
-      string sql = "SELECT * FROM users WHERE user_id = @user_id";
+      string sql = "SELECT * FROM user WHERE user_id = @user_id";
       return _db.QueryFirstOrDefault<User>(sql, new { user_id });
     }
 

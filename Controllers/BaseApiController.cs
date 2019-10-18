@@ -42,7 +42,7 @@ namespace Keepr.Controllers
       }
     }
 
-    [Authorize]
+    // [Authorize]
     [HttpPost]
     public virtual ActionResult<T> Create([FromBody] T data)
     {
@@ -57,7 +57,7 @@ namespace Keepr.Controllers
       }
     }
 
-    [Authorize]
+    // [Authorize]
     [HttpPut("{id}")]
     public virtual ActionResult<T> Edit([FromBody] T data, int id)
     {
@@ -70,6 +70,5 @@ namespace Keepr.Controllers
         return BadRequest(e.Message);
       }
     }
-
   }
 }

@@ -37,22 +37,22 @@ namespace Keepr
             options.LoginPath = "/Account/Login";
             options.Events.OnRedirectToLogin = (context) =>
                     {
-                  context.Response.StatusCode = 401;
-                  return Task.CompletedTask;
-                };
+                      context.Response.StatusCode = 401;
+                      return Task.CompletedTask;
+                    };
           });
       services.AddCors(options =>
       {
         options.AddPolicy("CorsDevPolicy", builder =>
               {
-            builder
-                      .WithOrigins(new string[]{
+                builder
+                          .WithOrigins(new string[]{
                             "http://localhost:8080"
-                  })
-                      .AllowAnyMethod()
-                      .AllowAnyHeader()
-                      .AllowCredentials();
-          });
+                      })
+                          .AllowAnyMethod()
+                          .AllowAnyHeader()
+                          .AllowCredentials();
+              });
       });
 
       services.AddControllers();
@@ -61,13 +61,23 @@ namespace Keepr
       services.AddScoped<IDbConnection>(x => CreateDbConnection());
 
       //NOTE REGISTER SERVICES
-      services.AddTransient<AccountService>();
+
+      // Brought to us by Boise Code Works... Thanks!!!
       services.AddTransient<AccountRepository>();
+      services.AddTransient<AccountService>();
+
+      // Repositories Inherited from BaseApiRepository
+      services.AddTransient<KeepRepository>();
+      services.AddTransient<VaultRepository>();
+
+      // Services Inherited from BaseApiService
+      services.AddTransient<KeepService>();
+      services.AddTransient<VaultService>();
     }
 
     private IDbConnection CreateDbConnection()
     {
-      string connectionString = Configuration.GetSection("DB").GetValue<string>("gearhost");
+      string connectionString = Configuration.GetSection("db").GetValue<string>("gearhost");
       return new MySqlConnection(connectionString);
     }
 

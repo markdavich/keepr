@@ -8,7 +8,7 @@ CREATE TABLE user (
     user_id VARCHAR(255) NOT NULL,
     user_username VARCHAR(255) NOT NULL,
     user_email VARCHAR(255) NOT NULL,
-    hash VARCHAR(255) NOT NULL,
+    user_hash VARCHAR(255) NOT NULL,
     PRIMARY KEY (user_id),
     UNIQUE KEY user_email (user_email)
 );
