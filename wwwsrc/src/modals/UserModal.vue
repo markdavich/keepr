@@ -3,7 +3,7 @@
     <div class="form-group">
       <label for="user-name">Name</label>
       <input
-        v-model="userData.name"
+        v-model="data.user_username"
         type="text"
         class="form-control"
         id="user-name"
@@ -15,12 +15,12 @@
       <div class="input-group-prepend">
         <span class="input-group-text">Picture Url</span>
       </div>
-      <input v-model="userData.imgUrl" type="text" placeholder="Url..." />
+      <input v-model="data.user_img_url" type="text" placeholder="Url..." />
     </div>
 
     <div class="form-group">
       <label for="color-picker">Color</label>
-      <input v-model="userData.color" type="color" id="color-picker" style="width:85%;" />
+      <input v-model="data.user_color" type="color" id="color-picker" style="width:85%;" />
     </div>
 
     <div class="button-container">
@@ -33,46 +33,29 @@
 
 <script>
 export default {
-  name: "user",
-  props: {
-    cancelCallBack: { type: Function, required: true }
-  },
-  components: {},
+  name: "user-modal",
   data() {
     return {
-      userData: {
-        _id: "",
-        name: "",
-        color: "",
-        imgUrl: ""
+      data: {
+        user_id: "",
+        user_username: "",
+        user_color: "",
+        user_img_url: "",
       }
     };
   },
-  computed: {
-    user() {
-      let result = this.$store.state.Auth.user;
-      return result;
-    }
-  },
   methods: {
     save() {
-      this.$store.dispatch("editUser", this.userData);
-      // setTimeout(() => {
-      //   Object.keys(this.$store.state.Comments.comments).forEach(key => {
-      //     this.$store.dispatch('getCommentsByTaskId', key)
-      //   })
-      // }, 100)
-      this.cancelCallBack();
+      this.$store.dispatch("editUser", this.data);
+      this.cancel();
     },
     cancel() {
-      this.cancelCallBack();
+      this.data = null;
+      this.$store.dispatch("closeModal");
     }
   },
   mounted() {
-    this.userData._id = this.user._id;
-    this.userData.name = this.user.name;
-    this.userData.color = this.user.color;
-    this.userData.imgUrl = this.user.imgUrl;
+    this.data = this.$store.state.Auth.user;
   }
 };
 </script>
