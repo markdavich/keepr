@@ -24,7 +24,7 @@ namespace Keepr.Repositories
 
     internal User GetUserByEmail(string user_email)
     {
-      string sql = "SELECT * FROM user WHERE email = @user_email";
+      string sql = "SELECT * FROM user WHERE user_email = @user_email";
       return _db.QueryFirstOrDefault<User>(sql, new { user_email });
     }
 
