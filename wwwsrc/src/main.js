@@ -44,5 +44,5 @@ async function init() {
     render: h => h(App)
   }).$mount('#app')
 }
-init()
 
+init()

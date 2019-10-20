@@ -19,7 +19,7 @@ export default {
   },
   mutations: {
     createKeep(state, keep) {
-      state.keep.push(keep);
+      state.keeps.push(keep);
     },
     getAllKeeps(state, keeps) {
       state.keeps = keeps;
