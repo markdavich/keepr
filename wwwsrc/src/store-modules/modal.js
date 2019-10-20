@@ -1,27 +1,27 @@
 export default {
   state: {
     modalUsage: 0,
-    showing: false
+    show: false
   },
 
   mutations: {
     showModal(state, modalUsage) {
-      state.showing = true;
+      state.show = true;
       state.modalUsage = modalUsage;
     },
 
     closeModal(state) {
       state.modalUsage = 0;
-      state.showing = false;
+      state.show = false;
     }
   },
 
   actions: {
-    showModal({commit}, modalUsage) {
+    showModal({ commit }, modalUsage) {
       commit("showModal", modalUsage);
     },
 
-    closeModal({commit}) {
+    closeModal({ commit }) {
       commit("closeModal");
     }
   }

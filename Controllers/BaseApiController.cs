@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Keepr.Services;
-using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Newtonsoft.Json;
+using System.Linq;
 
 namespace Keepr.Controllers
 {
@@ -21,7 +22,15 @@ namespace Keepr.Controllers
     {
       try
       {
+        // return Ok("Controllers.BaseApiController.cs");
+        // IEnumerable<T> result = _service.Get();
+        // T[] array = result.ToArray();
+        // T thing = array[0];
+        // string json = JsonConvert.SerializeObject(thing);
+
         return Ok(_service.Get());
+        // return Ok(new JavaScriptSerializer().Serialize(_service.Get()));
+        // return Ok(_service.Get());
       }
       catch (Exception e)
       {
@@ -44,7 +53,7 @@ namespace Keepr.Controllers
 
     // [Authorize]
     [HttpPost]
-    public virtual ActionResult<T> Create([FromBody] T data)
+    public virtual ActionResult<T> Create([FromBody] T data) //[FromBody] T data
     {
       try
       {
@@ -72,3 +81,4 @@ namespace Keepr.Controllers
     }
   }
 }
+

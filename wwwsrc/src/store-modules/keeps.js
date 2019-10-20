@@ -3,7 +3,7 @@ import Axios from 'axios';
 const CONTROLLER_ROUTE = 'api/keeps';
 
 let base = window.location.host.includes("localhost:8080")
-  ? "//localhost:5001/"
+  ? "https://localhost:5001/"
   : "/";
 
 let api = Axios.create({
@@ -26,29 +26,28 @@ export default {
     }
   },
   actions: {
-    async createKeep({commit}, keep)
-    {
+    async createKeep({ commit }, keep) {
       try {
-        debugger;
         let endPoint = ``;
-        let axiosResponse = await api.post(endPoint, keep);
+        let axiosResponse = await api.post("", keep);
         if (axiosResponse) {
           commit("createKeep", axiosResponse.data);
         }
       } catch (error) {
-        console.error("store-modules > keeps.js > actions > createKeep()")
+        console.warn("store-modules > keeps.js > actions > createKeep()")
+        console.error(error)
       }
     },
-    async getAllKeeps({commit}) {
+    async getAllKeeps({ commit }) {
       try {
-        debugger;
         let endPoint = ``;
-        let axiosResponse = await api.get(endPoint);
+        let axiosResponse = await api.get("");
         if (axiosResponse) {
           commit("getAllKeeps", axiosResponse.data);
         }
       } catch (error) {
-        console.error("store-modules > keeps.js > actions > getAllKeeps()")
+        console.warn("store-modules > keeps.js > actions > getAllKeeps()")
+        console.error(error)
       }
     }
   }

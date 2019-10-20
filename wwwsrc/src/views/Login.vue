@@ -6,9 +6,9 @@
             <button type="submit">Login</button>
         </form>
         <form v-else @submit.prevent="register">
-            <input type="text" v-model="newUser.username" placeholder="name">
-            <input type="email" v-model="newUser.user_email" placeholder="email">
-            <input type="password" v-model="newUser.user_password" placeholder="password">
+            <input type="text" v-model="user.user_username" placeholder="name">
+            <input type="email" v-model="user.user_email" placeholder="email">
+            <input type="password" v-model="user.user_password" placeholder="password">
             <button type="submit">Create Account</button>
         </form>
         <div @click="loginForm = !loginForm">
@@ -28,21 +28,21 @@
                     user_email: "",
                     user_password: ""
                 },
-                newUser: {
+                user: {
                     user_email: "",
                     user_password: "",
                     user_username: ""
                 }
             };
         },
-        beforeCreate(){
-            if(this.$store.state.user.id){
-                this.$router.push({name: "home"})
+        beforeCreate() {
+            if (this.$store.state.Auth.user.user_id) {
+                this.$router.push({ name: "home" })
             }
         },
         methods: {
             register() {
-                this.$store.dispatch("register", this.newUser);
+                this.$store.dispatch("register", this.user);
             },
             loginUser() {
                 this.$store.dispatch("login", this.creds);

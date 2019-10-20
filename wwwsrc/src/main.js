@@ -12,7 +12,8 @@ Vue.mixin({
     return {
       MODAL_USAGE: {
         NONE: 0,
-        USER: 1
+        USER: 1,
+        KEEP: 2
       }
     }
   },

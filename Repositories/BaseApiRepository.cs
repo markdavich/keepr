@@ -1,8 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Reflection;
 using Dapper;
+
+using System.Reflection;
 
 namespace Keepr.Repositories
 {
@@ -16,17 +16,16 @@ namespace Keepr.Repositories
       _table = tablename;
     }
 
-    internal string GetUpdateSql(int entity_id)
+    private string GetUpdateSql(int entity_id)
     {
-      PropertyInfo[] propertyInfoArray = typeof(T).GetProperties();
+      IEnumerable<PropertyInfo> propertyInfoArray = typeof(T).GetTypeInfo().DeclaredProperties;
       string id_column = _table + "_id";
       bool first = true;
       string result = $"update `{_table}` set";
 
       foreach (PropertyInfo propertyInfo in propertyInfoArray)
       {
-        string column_name =
-            _table + "_" + propertyInfo.GetValue(propertyInfo, null).ToString();
+        string column_name = propertyInfo.Name;
 
         if (column_name == id_column)
         {
@@ -44,7 +43,7 @@ namespace Keepr.Repositories
         }
       }
 
-      result += $" where `{id_column}` = {entity_id};\n";
+      result += $" where `{id_column}` = {entity_id};";
       result += $"select * from {_table} where `{id_column}` = {entity_id};";
 
       return result;
@@ -52,7 +51,7 @@ namespace Keepr.Repositories
 
     internal string GetCreateSql(string user_id)
     {
-      PropertyInfo[] propertyInfoArray = typeof(T).GetProperties();
+      IEnumerable<PropertyInfo> propertyInfoArray = typeof(T).GetTypeInfo().DeclaredProperties;
       string id_column = _table + "_id";
       bool first = true;
       string columns = "";
@@ -60,8 +59,7 @@ namespace Keepr.Repositories
 
       foreach (PropertyInfo propertyInfo in propertyInfoArray)
       {
-        string column_name =
-            _table + "_" + propertyInfo.GetValue(propertyInfo, null).ToString();
+        string column_name = propertyInfo.Name;
 
         if (column_name == id_column)
         {
@@ -84,16 +82,18 @@ namespace Keepr.Repositories
         }
       }
 
-      string result = $"insert into `{_table}` ({columns}) values ({values});\n";
+      string result = $"insert into `{_table}` ({columns}) values ({values});";
       result += "select last_insert_id();";
 
       return result;
     }
 
-    internal IEnumerable<T> Get()
+    public IEnumerable<T> Get()
     {
-      string sql = $"SELECT * FROM {_table}";
-      return _db.Query<T>(sql);
+      string sql = $"SELECT * FROM {_table};";
+      IEnumerable<T> result = _db.Query<T>(sql);
+      return result;
+      // return _db.Query<T>(sql);
     }
     internal T Get(int id)
     {

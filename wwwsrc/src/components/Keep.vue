@@ -9,9 +9,9 @@
     name: 'keep',
     props: {
       keep: {
-        keep_name: { type: string },
-        keep_description: { type: string },
-        keep_img_url: { type: string }
+        keep_name: "",
+        keep_description: "",
+        keep_img_url: ""
       }
     }
   }

@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// using System;
+// using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,30 +31,29 @@ namespace Keepr
     public void ConfigureServices(IServiceCollection services)
     {
       //ADD USER AUTH through JWT
-      services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-          .AddCookie(options =>
-          {
-            options.LoginPath = "/Account/Login";
-            options.Events.OnRedirectToLogin = (context) =>
-                    {
-                      context.Response.StatusCode = 401;
-                      return Task.CompletedTask;
-                    };
-          });
+      services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+      {
+        options.LoginPath = "/Account/Login";
+        options.Events.OnRedirectToLogin = (context) =>
+                {
+                  context.Response.StatusCode = 401;
+                  return Task.CompletedTask;
+                };
+      });
+
       services.AddCors(options =>
       {
         options.AddPolicy("CorsDevPolicy", builder =>
-              {
-                builder
-                          .WithOrigins(new string[]{
-                            "http://localhost:8080"
-                      })
-                          .AllowAnyMethod()
-                          .AllowAnyHeader()
-                          .AllowCredentials();
-              });
+          {
+            builder
+              .WithOrigins(new string[] { "http://localhost:8080" })
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials();
+          });
       });
 
+      services.AddMvc();
       services.AddControllers();
 
       //CONNECT TO DB
@@ -68,10 +67,10 @@ namespace Keepr
 
       // Repositories Inherited from BaseApiRepository
       services.AddTransient<KeepRepository>();
+      services.AddTransient<KeepsService>();
       services.AddTransient<VaultRepository>();
 
       // Services Inherited from BaseApiService
-      services.AddTransient<KeepService>();
       services.AddTransient<VaultService>();
     }
 
@@ -101,6 +100,7 @@ namespace Keepr
       app.UseAuthorization();
       app.UseDefaultFiles();
       app.UseStaticFiles();
+
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();

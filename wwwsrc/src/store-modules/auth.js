@@ -3,7 +3,7 @@ import router from '../router'
 import AuthService from '../auth-service'
 
 
-let baseUrl = location.host.includes('localhost') ? '//localhost:5000/' : '/'
+let baseUrl = location.host.includes('localhost') ? 'https://localhost:5000/' : '/'
 
 let api = Axios.create({
   baseURL: baseUrl + "api/",

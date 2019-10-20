@@ -29,14 +29,14 @@ CREATE TABLE vault (
 
 CREATE TABLE `keep` (
     keep_id int NOT NULL AUTO_INCREMENT,
+    user_id VARCHAR(255),
     keep_name VARCHAR(255) NOT NULL,
     keep_description VARCHAR(255) NOT NULL,
-    user_id VARCHAR(255),
     keep_img_url VARCHAR(255),
-    keep_is_public TINYINT(1) UNSIGNED,
-    keep_view_count INT DEFAULT 0,
-    keep_share_count INT DEFAULT 0,
-    keep_keep_count INT DEFAULT 0,
+    keep_is_public TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
+    keep_view_count INT NOT NULL DEFAULT 0,
+    keep_share_count INT NOT NULL DEFAULT 0,
+    keep_keep_count INT NOT NULL DEFAULT 0,
     INDEX user_id (user_id),
     FOREIGN KEY (user_id)
         REFERENCES user(user_id)

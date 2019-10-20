@@ -1,5 +1,5 @@
 <template>
-  <div @click.self="cancel" class="my-modal" v-if="showModal">
+  <div @click.self="cancel" class="my-modal">
     <div class="my-modal-body">
       <slot></slot>
     </div>
@@ -9,20 +9,12 @@
 
 <script>
   export default {
-    name: 'my-modal',
-    props: {
-      showModal: { type: Boolean, required: true },
-      closeCallBack: { type: Function, required: true }
-    },
+    name: 'modal',
     computed: {},
     methods: {
       cancel() {
-        // this.$emit("close")
-        this.closeCallBack()
+        this.$store.dispatch("closeModal");
       }
-    },
-    mounted() {
-      this.isVisible = this.showModal
     }
   }
 

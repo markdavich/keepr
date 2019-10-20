@@ -1,7 +1,7 @@
 <template>
   <div class="keeps container-fluid">
     <div class="row">
-      <keep v-for="keep in keeps" :key="keep.keep_id" v-if="keep.keep_is_public" :keep="keep" />
+      <keep v-for="keep in keeps" :key="keep.keep_id" :keep="keep" />
     </div>
   </div>
 </template>
