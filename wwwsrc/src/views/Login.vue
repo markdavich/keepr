@@ -1,12 +1,14 @@
 <template>
+    <!-- I added the autocomplete="off" so passwords won't keep showing up -->
+    <!-- ...But it doesn't do anything -->
     <div class="login">
-        <form v-if="loginForm" @submit.prevent="loginUser">
+        <form v-if="loginForm" @submit.prevent="loginUser" autocomplete="off">
             <input type="email" v-model="creds.user_email" placeholder="email">
             <input type="password" v-model="creds.user_password" placeholder="password">
             <button type="submit">Login</button>
         </form>
-        <form v-else @submit.prevent="register">
-            <input type="text" v-model="user.user_username" placeholder="name">
+        <form v-else @submit.prevent="register" autocomplete="off">
+            <input v-model="user.user_username" placeholder="name" autocomplete="off">
             <input type="email" v-model="user.user_email" placeholder="email">
             <input type="password" v-model="user.user_password" placeholder="password">
             <button type="submit">Create Account</button>
@@ -50,3 +52,7 @@
         }
     };
 </script>
+
+<style scoped>
+
+</style>

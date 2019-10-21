@@ -68,10 +68,11 @@ namespace Keepr
       // Repositories Inherited from BaseApiRepository
       services.AddTransient<KeepRepository>();
       services.AddTransient<KeepsService>();
-      services.AddTransient<VaultRepository>();
+      
 
       // Services Inherited from BaseApiService
       services.AddTransient<VaultService>();
+      services.AddTransient<VaultRepository>();
     }
 
     private IDbConnection CreateDbConnection()

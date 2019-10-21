@@ -1,7 +1,7 @@
 <template>
   <div class="keep">
     <img class="keep-img" :src="keep.keep_img_url" />
-    <save-keep />
+    <save-keep :keep="keep" />
     <keep-options />
     <keep-info />
   </div>

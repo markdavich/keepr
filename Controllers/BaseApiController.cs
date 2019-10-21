@@ -22,15 +22,34 @@ namespace Keepr.Controllers
     {
       try
       {
-        // return Ok("Controllers.BaseApiController.cs");
-        // IEnumerable<T> result = _service.Get();
-        // T[] array = result.ToArray();
-        // T thing = array[0];
-        // string json = JsonConvert.SerializeObject(thing);
-
         return Ok(_service.Get());
-        // return Ok(new JavaScriptSerializer().Serialize(_service.Get()));
-        // return Ok(_service.Get());
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+    [HttpGet("user")]
+    public virtual ActionResult<IEnumerable<T>> GetByLoggedInUser()
+    {
+      string userId = HttpContext.User.FindFirstValue("user_id");
+      try
+      {
+        return Ok(_service.GetByUserId(userId));
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+    [HttpGet("user/{id}")]
+    public virtual ActionResult<IEnumerable<T>> GetByUserId(string id)
+    {
+      try
+      {
+        return Ok(_service.GetByUserId(id));
       }
       catch (Exception e)
       {

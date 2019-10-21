@@ -50,7 +50,13 @@
     width: 76px;
     height: 76px;
     border-radius: 60%;
-    box-shadow: 0px 300px 0px 700px var(--info-bg);
+    /* box-shadow: 0px 300px 0px 700px var(--info-bg); */
+
+    /* Left to Right fade */
+    box-shadow: -170px 0px 100px 60px var(--info-bg);
+
+    /* Right to Left fade */
+    /* box-shadow: 80px 0px 100px 170px var(--info-bg); */
   }
 
   .info-cut-left {

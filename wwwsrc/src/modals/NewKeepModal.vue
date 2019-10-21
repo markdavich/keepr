@@ -35,7 +35,6 @@
     data() {
       return {
         data: {
-          user_id: "",
           keep_name: "Grumpy",
           keep_description: "Cat",
           keep_img_url: "https://pbs.twimg.com/profile_images/1080545769034108928/CEzHCTpI_400x400.jpg",
@@ -45,7 +44,7 @@
     },
     methods: {
       save() {
-        this.data.user_id = this.userId();
+        // this.data.user_id = this.userId();
         this.$store.dispatch("createKeep", this.data);
         this.cancel();
       },

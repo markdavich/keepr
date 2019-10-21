@@ -88,6 +88,12 @@ namespace Keepr.Repositories
       return result;
     }
 
+    public IEnumerable<T> GetByUserId(string userId)
+    {
+      string sql = $"SELECT * FROM {_table} WHERE user_id = @userId;";
+      return _db.Query<T>(sql, new { userId });
+    }
+
     public IEnumerable<T> Get()
     {
       string sql = $"SELECT * FROM {_table};";

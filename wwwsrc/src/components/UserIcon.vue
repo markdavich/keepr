@@ -16,7 +16,7 @@
     },
     computed: {
       hasImage() {
-        let imgUrl = this.user.imgUrl
+        let imgUrl = this.user.user_img_url
         let result = imgUrl && imgUrl !== ''
         return result
         // return this.user.imgUrl !== ''
@@ -25,7 +25,7 @@
         let data = ''
 
         if (this.hasImage) {
-          data = `url('${this.user.imgUrl}')`
+          data = `url('${this.user.user_img_url}')`
         } else {
           data = `'transparent'`
         }
@@ -36,7 +36,7 @@
         return result
       },
       authorInitial() {
-        let result = this.user.name.charAt(0).toUpperCase();
+        let result = this.$store.state.Auth.user.user_username.charAt(0).toUpperCase();
         return result;
       },
     }

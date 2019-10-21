@@ -1,7 +1,8 @@
 export default {
   state: {
     modalUsage: 0,
-    show: false
+    show: false,
+    newValutKeep: null // This is an object {}
   },
 
   mutations: {
@@ -13,7 +14,15 @@ export default {
     closeModal(state) {
       state.modalUsage = 0;
       state.show = false;
-    }
+    },
+
+    showNewValultForKeep(state, newValutKeep) {
+      state.newValutKeep = newValutKeep;
+    },
+
+    closeNewValultForKeep(state) {
+      state.newValutKeep = null;
+    },
   },
 
   actions: {
@@ -23,6 +32,21 @@ export default {
 
     closeModal({ commit }) {
       commit("closeModal");
+    },
+
+    showNewValultForKeep({commit, dispatch}, payload)
+    {
+      let modalUsage = payload.modalUsage;
+      let newValutKeep = payload.newValutKeep;
+
+      commit("showNewValultForKeep", newValutKeep);
+      dispatch("showModal", modalUsage);
+    },
+
+    closeNewVaultForKeep({commit, dispatch})
+    {
+      commit("closeNewValultForKeep");
+      dispatch("closeModal");
     }
   }
 }

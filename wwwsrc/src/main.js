@@ -13,7 +13,8 @@ Vue.mixin({
       MODAL_USAGE: {
         NONE: 0,
         USER: 1,
-        KEEP: 2
+        KEEP: 2,
+        VAULT: 3
       }
     }
   },
@@ -45,4 +46,4 @@ async function init() {
   }).$mount('#app')
 }
 
-init()
+init();

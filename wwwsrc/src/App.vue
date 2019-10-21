@@ -1,8 +1,22 @@
 <template>
   <div id="app">
-    <router-view />
+    <nav-bar />
+    <div id="content">
+      <router-view />
+    </div>
   </div>
 </template>
+
+<script>
+  export default {
+    name: "app",
+    mounted() {
+      // This makes is so the content starts 20px below the nav-bar
+      let navBar = document.getElementById('nav-bar')
+      document.body.style.paddingTop = `${navBar.clientHeight + 20}px`
+    }
+  }
+</script>
 
 <style>
   :root {

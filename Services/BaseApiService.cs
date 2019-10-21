@@ -17,6 +17,11 @@ namespace Keepr.Services
       return _repo.Get();
     }
 
+    public virtual IEnumerable<T> GetByUserId(string userId)
+    {
+      return _repo.GetByUserId(userId);
+    }
+
     public virtual T Get(int id)
     {
       T exists = _repo.Get(id);

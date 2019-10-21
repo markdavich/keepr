@@ -6,6 +6,7 @@ import Vue from 'vue';
 import Modal from './modals/Modal.vue';
 import NewKeepModal from './modals/NewKeepModal.vue';
 import UserModal from './modals/UserModal.vue';
+import VaultModal from './modals/VaultModal.vue';
 // Components
 import ClickEdit from './components/ClickEdit.vue';
 import Keep from './components/Keep.vue';
@@ -23,6 +24,7 @@ import UserIcon from './components/UserIcon.vue';
 Vue.component('modal', Modal);
 Vue.component('new-keep-modal', NewKeepModal);
 Vue.component('user-modal', UserModal);
+Vue.component('vault-modal', VaultModal);
 // Components
 Vue.component('click-edit', ClickEdit);
 Vue.component('keep', Keep);

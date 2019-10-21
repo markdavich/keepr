@@ -1,6 +1,6 @@
 <template>
-  <div class="logged-in-user dropdown" v-show="!isLogin">
-    <h3>{{ user.name }}</h3>
+  <div class="logged-in-user dropdown" v-if="!isLogin">
+    <h3>{{ user.user_username }}</h3>
     <div data-toggle="dropdown">
       <user-icon class="u-icon" :user="user" />
     </div>
@@ -12,16 +12,8 @@
 </template>
 
 <script>
-  const MODAL_USAGE = {
-    NONE: 0,
-    USER: 1,
-    COLLABORATORS: 2
-  };
   export default {
     name: "logged-in-user",
-    props: {
-      editCallBack: { type: Function, required: true }
-    },
     computed: {
       user() {
         return this.$store.state.Auth.user;
@@ -33,7 +25,7 @@
     },
     methods: {
       editUser() {
-        this.editCallBack(MODAL_USAGE.USER);
+        this.showModal(this.MODAL_USAGE.USER); // main.js Vue.mixins
       },
       logout() {
         this.$store.dispatch("logout");
@@ -55,10 +47,10 @@
 
   .u-icon {
     cursor: pointer;
-    min-height: 64px !important;
-    min-width: 64px !important;
-    max-height: 64px !important;
-    max-width: 64px !important;
+    min-height: 46px !important;
+    min-width: 46px !important;
+    max-height: 46px !important;
+    max-width: 46px !important;
   }
 
   a {

@@ -13,7 +13,6 @@ let api = Axios.create({
   withCredentials: true
 });
 
-
 export default {
   state: {
     keeps: [],
@@ -64,7 +63,6 @@ export default {
     // Pass 'rootState' in order to get access to other store modules
     // EXAMPLE: rootState.ModuleName.statePropertyName
     setKeepsColumns({ commit, dispatch, state, rootState }) {
-      debugger;
       dispatch("setColumnCount");
       let columnCount = rootState.Settings.display.columnCount;
       let keeps = state.keeps;
