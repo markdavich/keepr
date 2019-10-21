@@ -9,6 +9,7 @@ import UserModal from './modals/UserModal.vue';
 // Components
 import ClickEdit from './components/ClickEdit.vue';
 import Keep from './components/Keep.vue';
+import KeepsColumn from './components/KeepsColumn.vue';
 import KeepInfo from './components/KeepInfo.vue';
 import KeepOptions from './components/KeepOptions.vue';
 import Keeps from './components/Keeps.vue';
@@ -25,6 +26,7 @@ Vue.component('user-modal', UserModal);
 // Components
 Vue.component('click-edit', ClickEdit);
 Vue.component('keep', Keep);
+Vue.component('keeps-column', KeepsColumn);
 Vue.component('keep-info', KeepInfo);
 Vue.component('keep-options', KeepOptions);
 Vue.component('keeps', Keeps);

@@ -33,10 +33,20 @@
       },
       newKeep() {
         this.$store.dispatch("showModal", this.MODAL_USAGE.KEEP);
+      },
+      resizeWindow() {
+        this.$store.dispatch("resizeWindow");
       }
     },
     mounted() {
-      this.$store.dispatch("getAllKeeps");
+      this.$nextTick(() => {
+        this.resizeWindow();
+        window.addEventListener('resize', this.resizeWindow);
+        this.$store.dispatch("getAllKeeps");
+      });
+    },
+    beforeDestroy() {
+      window.removeEventListener('resize', this.resizeWindow);
     }
   };
 </script>
