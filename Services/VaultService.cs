@@ -3,11 +3,17 @@ using Keepr.Repositories;
 
 namespace Keepr.Services
 {
-  public class VaultService: BaseApiService<Vault>
+  public class VaultService : BaseApiService<Vault>
   {
-    public VaultService(VaultRepository repo): base(repo)
+    private VaultRepository _vaultRepo;
+    public VaultService(VaultRepository repo) : base(repo)
     {
-      
+      _vaultRepo = repo;
+    }
+
+    public Keep AddKeepToVault(VaultKeepMap vkm)
+    {
+      return _vaultRepo.AddKeepToVault(vkm);
     }
   }
 }

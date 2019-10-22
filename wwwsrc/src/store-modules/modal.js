@@ -16,7 +16,7 @@ export default {
       state.show = false;
     },
 
-    showNewValultForKeep(state, newValutKeep) {
+    showNewVaultForKeep(state, newValutKeep) {
       state.newValutKeep = newValutKeep;
     },
 
@@ -34,17 +34,15 @@ export default {
       commit("closeModal");
     },
 
-    showNewValultForKeep({commit, dispatch}, payload)
-    {
+    showNewVaultForKeep({ commit, dispatch }, payload) {
       let modalUsage = payload.modalUsage;
       let newValutKeep = payload.newValutKeep;
 
-      commit("showNewValultForKeep", newValutKeep);
+      commit("showNewVaultForKeep", newValutKeep);
       dispatch("showModal", modalUsage);
     },
 
-    closeNewVaultForKeep({commit, dispatch})
-    {
+    closeNewVaultForKeep({ commit, dispatch }) {
       commit("closeNewValultForKeep");
       dispatch("closeModal");
     }

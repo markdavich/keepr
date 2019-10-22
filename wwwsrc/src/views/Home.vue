@@ -9,6 +9,7 @@
     <modal v-show="modalShow">
       <user-modal v-if="modalUsage === MODAL_USAGE.USER" />
       <new-keep-modal v-if="modalUsage === MODAL_USAGE.KEEP" />
+      <vault-modal v-if="modalUsage === MODAL_USAGE.VAULT" />
     </modal>
   </div>
 </template>

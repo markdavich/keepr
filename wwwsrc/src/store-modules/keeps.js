@@ -55,8 +55,8 @@ export default {
           dispatch("setKeepsColumns");
         }
       } catch (error) {
-        console.warn("store-modules > keeps.js > actions > getAllKeeps()")
-        console.error(error)
+        console.warn("store-modules > keeps.js > actions > getAllKeeps()");
+        console.error(error);
       }
     },
 

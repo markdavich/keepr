@@ -4,7 +4,8 @@
     <button class="btn btn-outline-danger save-keep" data-toggle="dropdown">Keep</button>
     <div class="dropdown-menu">
       <a class="dropdown-item" @click="createNewVault">New Vault...</a>
-      <a class="dropdown-item" @click="logout">Logout</a>
+      <a v-for="vault in vaults" :key="vault.vault_id" class="dropdown-item"
+        @click="addKeepToVault(vault.vault_id)">{{ vault.vault_name }}</a>
     </div>
   </div>
 </template>
@@ -18,12 +19,25 @@
     },
     computed: {
       vaults() {
-
+        return this.$store.state.Vaults.vaults;
       }
     },
     methods: {
       createNewVault() {
-        this.$store.dispatch("showNewVaultForKeep", this.keep);
+        let payload = {
+          modalUsage: this.MODAL_USAGE.VAULT,
+          newValutKeep: this.keep
+        }
+        this.$store.dispatch("showNewVaultForKeep", payload);
+      },
+      addKeepToVault(vaultId) {
+        alert("components > SaveKeep > methods > addKeepToVault(vaultId): NOT IMPLEMENTED")
+        let vaultKeepMap = {
+          vault_id: vaultId,
+          keep_id: this.keep.keep_id,
+          user_id: this.userId()
+        };
+        this.$store.dispatch("addKeepToVault", vaultKeepMap);
       }
     }
   }

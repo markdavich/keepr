@@ -32,11 +32,16 @@ export default {
   },
 
   actions: {
-    async createVault({ commit }, vault) {
+    async createVault({ commit }, payload) {
+      let vault = payload.vault;
+      let keep = payload.keep;
       try {
         let axiosResponse = await api.post("", vault);
         if (axiosResponse) {
           commit("createVault", axiosResponse.data);
+          if (keep) {
+            alert("store-modules > vaults.js > actions > createVault(): ADD KEEP TO VAULT NOT IMPLEMENTED YET");
+          }
         }
       } catch (error) {
         console.warn("store-modules > vaults.js > actions > createVault()")
@@ -47,7 +52,8 @@ export default {
     async getLoggedInUserVaults({ commit }) {
       try {
         let endPoint = `user`;
-        let vaults = await api.get(endPoint);
+        let axiosResponse = await api.get(endPoint);
+        let vaults = axiosResponse.data;
         commit("setVaults", vaults);
       } catch (error) {
         console.warn("store-modules > vaults.js > actions > getVaultsByUserId()");
@@ -57,6 +63,18 @@ export default {
 
     clearCurrentVault({ commit }) {
       commit("setCurrentVault", null);
+    },
+
+    async addKeepToVault({commit, dispatch}, vaultKeepMap) {
+      try {
+        dispatch;
+        let endPoint = `${vaultKeepMap.vault_id}/keeps`;
+        await api.post(endPoint, vaultKeepMap);
+        dispatch("getAllKeeps");
+      } catch (error) {
+        console.warn("store-modules > vaults.js > actions > addKeepToVault()");
+        console.error(error);  
+      }
     }
   }
 
