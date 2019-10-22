@@ -22,6 +22,8 @@
   :root {
     --info-border: rgb(53, 216, 4);
     --info-bg: rgba(196, 251, 43, 0.294);
+    --info-height: 40px;
+    --keep-count-color: rgb(253, 34, 71);
   }
 
   #app {

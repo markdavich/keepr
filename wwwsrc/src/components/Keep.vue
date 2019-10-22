@@ -3,7 +3,7 @@
     <img class="keep-img" :src="keep.keep_img_url" />
     <save-keep :keep="keep" />
     <keep-options />
-    <keep-info />
+    <keep-info :keep="keep" />
   </div>
 </template>
 

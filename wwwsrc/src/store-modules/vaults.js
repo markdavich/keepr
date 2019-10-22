@@ -32,15 +32,25 @@ export default {
   },
 
   actions: {
-    async createVault({ commit }, payload) {
+    // Pass 'rootState' in order to get access to other store modules
+    // EXAMPLE: rootState.ModuleName.statePropertyName
+    async createVault({ commit, rootState, dispatch }, payload) {
       let vault = payload.vault;
       let keep = payload.keep;
       try {
         let axiosResponse = await api.post("", vault);
         if (axiosResponse) {
-          commit("createVault", axiosResponse.data);
+          let vault_id = axiosResponse.data;
+          vault.vault_id = vault_id;
+          commit("createVault", vault);
           if (keep) {
-            alert("store-modules > vaults.js > actions > createVault(): ADD KEEP TO VAULT NOT IMPLEMENTED YET");
+            debugger;
+            let vaultKeepMap = {
+              vault_id: vault_id,
+              keep_id: keep.keep_id,
+              user_id: rootState.Auth.user.user_id
+            };
+            dispatch("addKeepToVault", vaultKeepMap);
           }
         }
       } catch (error) {
@@ -65,7 +75,7 @@ export default {
       commit("setCurrentVault", null);
     },
 
-    async addKeepToVault({commit, dispatch}, vaultKeepMap) {
+    async addKeepToVault({ commit, dispatch }, vaultKeepMap) {
       try {
         dispatch;
         let endPoint = `${vaultKeepMap.vault_id}/keeps`;
@@ -73,7 +83,7 @@ export default {
         dispatch("getAllKeeps");
       } catch (error) {
         console.warn("store-modules > vaults.js > actions > addKeepToVault()");
-        console.error(error);  
+        console.error(error);
       }
     }
   }

@@ -1,5 +1,6 @@
 <template>
   <div class="hide keep-info">
+    <keep-count :keep="keep" />
     <div class="info-cut-left"></div>
     <div class="info-cut-middle"></div>
     <div class="info-cut-circle"></div>
@@ -12,13 +13,9 @@
 <script>
   export default {
     name: 'keep-info',
-    props: [],
-    components: {},
-    data() {
-      return {}
-    },
-    computed: {},
-    methods: {}
+    props: {
+      keep: { type: Object, required: true }
+    }
   }
 </script>
 
@@ -29,7 +26,7 @@
     bottom: 5px;
     left: 5px;
     width: 85%;
-    height: 40px;
+    height: var(--info-height);
     overflow: hidden;
     border-radius: 5px;
     border-bottom-left-radius: 10px;
@@ -37,7 +34,7 @@
 
   .info-cut {
     width: 100%;
-    height: 40px;
+    height: var(--info-height);
     position: relative;
     overflow: hidden;
   }
@@ -63,7 +60,7 @@
     position: absolute;
     left: 0px;
     top: 0px;
-    height: 40px;
+    height: var(--info-height);
     width: 10px;
 
     border-bottom-left-radius: 9px;
@@ -79,7 +76,7 @@
     position: absolute;
     left: 10px;
     top: 0px;
-    height: 40px;
+    height: var(--info-height);
     width: 78%;
     border-top: solid var(--info-border) 2px;
     border-bottom: solid var(--info-border) 2px;

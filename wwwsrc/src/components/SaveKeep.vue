@@ -2,7 +2,7 @@
   <!-- <button class="btn btn-outline-danger hide save-keep">Keep</button> -->
   <div class="hide save-keep">
     <button class="btn btn-outline-danger save-keep" data-toggle="dropdown">Keep</button>
-    <div class="dropdown-menu">
+    <div class="dropdown-menu" v-bind:class="{ 'dropdown-menu-right': isLastColumn }">
       <a class="dropdown-item" @click="createNewVault">New Vault...</a>
       <a v-for="vault in vaults" :key="vault.vault_id" class="dropdown-item"
         @click="addKeepToVault(vault.vault_id)">{{ vault.vault_name }}</a>
@@ -20,6 +20,9 @@
     computed: {
       vaults() {
         return this.$store.state.Vaults.vaults;
+      },
+      isLastColumn() {
+        return true;
       }
     },
     methods: {
@@ -31,7 +34,6 @@
         this.$store.dispatch("showNewVaultForKeep", payload);
       },
       addKeepToVault(vaultId) {
-        alert("components > SaveKeep > methods > addKeepToVault(vaultId): NOT IMPLEMENTED")
         let vaultKeepMap = {
           vault_id: vaultId,
           keep_id: this.keep.keep_id,
