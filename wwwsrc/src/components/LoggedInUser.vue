@@ -7,6 +7,7 @@
     <div class="dropdown-menu">
       <a class="dropdown-item" @click="editUser">Edit</a>
       <a class="dropdown-item" @click="logout">Logout</a>
+      <a class="dropdown-item" @click="goToDashboard">Dashboard</a>
     </div>
   </div>
 </template>
@@ -29,6 +30,9 @@
       },
       logout() {
         this.$store.dispatch("logout");
+      },
+      goToDashboard() {
+        this.$router.push({ name: 'user', params: { userId: this.userId() } });
       }
     }
   };

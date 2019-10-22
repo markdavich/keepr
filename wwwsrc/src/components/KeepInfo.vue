@@ -2,7 +2,7 @@
   <div class="hide keep-info">
     <keep-tags-button />
     <keep-count :keep="keep" />
-    <keep-view-count />
+    <keep-view-count :keep="keep" />
     <div class="info-cut-left"></div>
     <div class="info-cut-middle"></div>
     <div class="info-cut-circle"></div>

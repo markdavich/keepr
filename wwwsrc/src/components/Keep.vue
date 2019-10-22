@@ -1,6 +1,6 @@
 <template>
-  <div class="keep" @click="keepClick">
-    <img class="keep-img" :src="keep.keep_img_url" />
+  <div class="keep">
+    <img class="keep-img" :src="keep.keep_img_url" @click.self="keepClick" />
     <save-keep :keep="keep" />
     <keep-options />
     <keep-info :keep="keep" />

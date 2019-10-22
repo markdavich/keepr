@@ -19,7 +19,7 @@
     },
     computed: {
       vaults() {
-        return this.$store.state.Vaults.vaults;
+        return this.$store.state.Vaults.currentUserVaults;
       },
       isLastColumn() {
         return true;

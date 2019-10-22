@@ -28,6 +28,11 @@ export default {
       let columnCount = Math.floor(window.innerWidth / state.display.columnWidth);
       commit("setColumnCount", columnCount);
     },
+    setUserViewColumnCount({commit, state}) {
+      let width = document.getElementById("user-keeps").clientWidth;
+      let columnCount = Math.floor(width / state.display.columnWidth);
+      commit("setColumnCount", columnCount);
+    },
     resizeWindow({ commit, dispatch, state }) {
       // Get the current column count
       let columnCount = state.display.columnCount;
@@ -41,6 +46,20 @@ export default {
       };
       commit("setColumnCount", columnCount);
       dispatch("setKeepsColumns")
+    },
+    resizeUserView({commit, dispatch, state}) {
+      // Get the current column count
+      let columnCount = state.display.columnCount;
+
+      // Set the column count for the current window size
+      dispatch("setUserViewColumnCount");
+
+      // check if the column count changed
+      if (columnCount == state.display.columnCount) {
+        return;
+      };
+      commit("setColumnCount", columnCount);
+      dispatch("setUserViewKeepsColumns")
     }
   }
 

@@ -16,18 +16,18 @@ let api = Axios.create({
 export default {
   state: {
     currentVault: null, // This is an object {}
-    vaults: []
+    currentUserVaults: []
   },
   mutations: {
-    setVaults(state, vaults) {
-      state.vaults = vaults;
+    setVaults(state, currentUserVaults) {
+      state.currentUserVaults = currentUserVaults;
     },
     setCurrentVault(state, currentVault) {
       state.currentVault = currentVault;
     },
     createVault(state, vault) {
-      let vaults = [...state.vaults, vault];
-      Vue.set(state, "vaults", vaults);
+      let vaults = [...state.currentUserVaults, vault];
+      Vue.set(state, "currentUserVaults", vaults);
     }
   },
 
@@ -62,8 +62,8 @@ export default {
       try {
         let endPoint = `user`;
         let axiosResponse = await api.get(endPoint);
-        let vaults = axiosResponse.data;
-        commit("setVaults", vaults);
+        let currentUserVaults = axiosResponse.data;
+        commit("setVaults", currentUserVaults);
       } catch (error) {
         console.warn("store-modules > vaults.js > actions > getVaultsByUserId()");
         console.error(error);

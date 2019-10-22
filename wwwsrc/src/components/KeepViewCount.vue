@@ -1,6 +1,6 @@
 <template>
   <div class="keep-view-count">
-    0
+    {{ keep.keep_view_count }}
   </div>
 </template>
 
@@ -9,7 +9,7 @@
   export default {
     name: 'keep-view-count',
     props: {
-      // keep: { type: Object, required: true }
+      keep: { type: Object, required: true }
     }
   }
 </script>

@@ -21,6 +21,9 @@ import LoggedInUser from './components/LoggedInUser.vue';
 import NavBar from './components/NavBar.vue';
 import SaveKeep from './components/SaveKeep.vue';
 import UserIcon from './components/UserIcon.vue';
+import UserKeeps from './components/UserKeeps.vue';
+import Vault from './components/Vault.vue';
+import Vaults from './components/Vaults.vue';
 // Views
 
 // ------ REGISTER COMPONENTS
@@ -43,5 +46,8 @@ Vue.component('logged-in-user', LoggedInUser);
 Vue.component('nav-bar', NavBar);
 Vue.component('save-keep', SaveKeep);
 Vue.component('user-icon', UserIcon);
+Vue.component('user-keeps', UserKeeps);
+Vue.component('vault', Vault);
+Vue.component('vaults', Vaults);
 
 

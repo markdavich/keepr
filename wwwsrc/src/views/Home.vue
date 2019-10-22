@@ -36,7 +36,11 @@
         this.$store.dispatch("showModal", this.MODAL_USAGE.KEEP);
       },
       resizeWindow() {
-        this.$store.dispatch("resizeWindow");
+        if (this.$route.name == "user") {
+          this.$store.dispatch("resizeUserView");
+        } else {
+          this.$store.dispatch("resizeWindow");
+        }
       }
     },
     mounted() {

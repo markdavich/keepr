@@ -6,9 +6,11 @@ import Store from './store.js'
 // @ts-ignore
 import Home from './views/Home.vue'
 // @ts-ignore
+import KeepView from './views/KeepView.vue';
+// @ts-ignore
 import Login from './views/Login.vue'
 // @ts-ignore
-import KeepView from './views/KeepView.vue';
+import UserView from './views/UserView.vue';
 
 Vue.use(Router, Store)
 
@@ -17,7 +19,11 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      beforeEnter(to, from, next) {
+        Store.dispatch("getLoggedInUserVaults");
+        next();
+      }
     },
     {
       path: '/login',
@@ -31,6 +37,16 @@ export default new Router({
       props: true,
       beforeEnter(to, from, next) {
         Store.dispatch("setActiveKeep", to.params.keepId);
+        next();
+      }
+    },
+    {
+      path: '/user/:userId',
+      name: 'user',
+      component: UserView,
+      props: true,
+      beforeEnter(to, from, next) {
+        Store.dispatch("getLoggedInUserVaults");
         next();
       }
     }
