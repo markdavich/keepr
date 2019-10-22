@@ -3,7 +3,7 @@
     <!-- <h1>Welcome Home {{user.username}}</h1> -->
     <button v-if="user.user_id" @click="logout">logout</button>
     <router-link v-else :to="{name: 'login'}">Login</router-link>
-    <button @click="newKeep">New Keep</button>
+    <button class="btn" @click="newKeep">New Keep</button>
     <keeps />
 
     <modal v-show="modalShow">

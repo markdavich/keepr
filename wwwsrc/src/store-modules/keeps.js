@@ -15,6 +15,7 @@ let api = Axios.create({
 
 export default {
   state: {
+    activeKeep: null, // This is a Keep object {}
     keeps: [],
     keepsColumns: {
       // 0: [ Array of keeps ],
@@ -30,6 +31,13 @@ export default {
     },
     setKeepsColumns(state, keepsColumns) {
       Vue.set(state, "keepsColumns", keepsColumns);
+    },
+    setActiveKeep(state, keep) {
+      state.activeKeep = keep;
+
+      state.keeps.splice(
+        state.keeps.findIndex(keep => keep.keep_id === keep.keep_id), 1, keep
+      );
     }
   },
   actions: {
@@ -80,6 +88,21 @@ export default {
       };
 
       commit("setKeepsColumns", keepsColumns);
+    },
+
+    async setActiveKeep({ commit, dispatch }, keepId) {
+      try {
+        let endPoint = `${keepId}/view`;
+        let axiosResponse = await api.put(endPoint);
+        if (axiosResponse) {
+          let keep = axiosResponse.data;
+          commit("setActiveKeep", keep);
+          dispatch("setKeepsColumns");
+        }
+      } catch (error) {
+        console.warn("store-modules > keeps.js > actions > setActiveKeep()");
+        console.error(error);
+      }
     }
   }
 }

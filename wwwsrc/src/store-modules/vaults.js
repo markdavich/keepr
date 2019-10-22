@@ -44,7 +44,6 @@ export default {
           vault.vault_id = vault_id;
           commit("createVault", vault);
           if (keep) {
-            debugger;
             let vaultKeepMap = {
               vault_id: vault_id,
               keep_id: keep.keep_id,

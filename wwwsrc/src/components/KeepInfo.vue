@@ -1,6 +1,8 @@
 <template>
   <div class="hide keep-info">
+    <keep-tags-button />
     <keep-count :keep="keep" />
+    <keep-view-count />
     <div class="info-cut-left"></div>
     <div class="info-cut-middle"></div>
     <div class="info-cut-circle"></div>
@@ -47,10 +49,10 @@
     width: 76px;
     height: 76px;
     border-radius: 60%;
-    /* box-shadow: 0px 300px 0px 700px var(--info-bg); */
+    box-shadow: 0px 300px 0px 700px var(--info-bg);
 
     /* Left to Right fade */
-    box-shadow: -170px 0px 100px 60px var(--info-bg);
+    /* box-shadow: -170px 0px 100px 60px var(--info-bg); */
 
     /* Right to Left fade */
     /* box-shadow: 80px 0px 100px 170px var(--info-bg); */
@@ -69,7 +71,7 @@
     border-top: solid var(--info-border) 2px;
     border-bottom: solid var(--info-border) 2px;
 
-    z-index: 10;
+    z-index: 1;
   }
 
   .info-cut-middle {
@@ -81,7 +83,7 @@
     border-top: solid var(--info-border) 2px;
     border-bottom: solid var(--info-border) 2px;
 
-    z-index: 10;
+    z-index: 1;
   }
 
   .info-cut-circle {
@@ -94,7 +96,7 @@
     border-radius: 60%;
 
     border: solid var(--info-border)2px;
-    z-index: 10;
+    z-index: 1;
   }
 
   .info-cut-top-right {
@@ -103,6 +105,6 @@
     top: 0px;
     width: 25px;
     border-top: solid var(--info-border) 2px;
-    z-index: 10;
+    z-index: 1;
   }
 </style>

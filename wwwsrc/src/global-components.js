@@ -15,10 +15,13 @@ import KeepInfo from './components/KeepInfo.vue';
 import KeepOptions from './components/KeepOptions.vue';
 import Keeps from './components/Keeps.vue';
 import KeepsColumn from './components/KeepsColumn.vue';
+import KeepTagsButton from './components/KeepTagsButton.vue';
+import KeepViewCount from './components/KeepViewCount.vue';
 import LoggedInUser from './components/LoggedInUser.vue';
 import NavBar from './components/NavBar.vue';
 import SaveKeep from './components/SaveKeep.vue';
 import UserIcon from './components/UserIcon.vue';
+// Views
 
 // ------ REGISTER COMPONENTS
 // Modals
@@ -34,6 +37,8 @@ Vue.component('keep-info', KeepInfo);
 Vue.component('keep-options', KeepOptions);
 Vue.component('keeps', Keeps);
 Vue.component('keeps-column', KeepsColumn);
+Vue.component('keep-tags-button', KeepTagsButton);
+Vue.component('keep-view-count', KeepViewCount);
 Vue.component('logged-in-user', LoggedInUser);
 Vue.component('nav-bar', NavBar);
 Vue.component('save-keep', SaveKeep);

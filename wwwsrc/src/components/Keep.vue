@@ -1,5 +1,5 @@
 <template>
-  <div class="keep">
+  <div class="keep" @click="keepClick">
     <img class="keep-img" :src="keep.keep_img_url" />
     <save-keep :keep="keep" />
     <keep-options />
@@ -16,6 +16,11 @@
         keep_name: "",
         keep_description: "",
         keep_img_url: ""
+      }
+    },
+    methods: {
+      keepClick() {
+        this.$router.push({ name: "keep", params: { keepId: this.keep.keep_id } });
       }
     }
   }

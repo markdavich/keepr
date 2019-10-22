@@ -20,10 +20,12 @@
 
 <style>
   :root {
-    --info-border: rgb(53, 216, 4);
-    --info-bg: rgba(196, 251, 43, 0.294);
+    --info-border: rgb(0, 180, 69);
+    --info-bg: rgba(255, 255, 255, 0.507);
     --info-height: 40px;
     --keep-count-color: rgb(253, 34, 71);
+    --keep-tag-color: rgb(245, 245, 79);
+    --keep-view-count-color: rgb(1, 111, 255);
   }
 
   #app {

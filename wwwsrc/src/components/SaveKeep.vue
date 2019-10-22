@@ -61,8 +61,8 @@
   } */
   .save-keep {
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 3px;
+    right: 3px;
     border-radius: 5px;
     border-top-right-radius: 10px;
     border-bottom-left-radius: 32px;
