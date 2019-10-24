@@ -4,6 +4,12 @@
     <div id="content">
       <router-view />
     </div>
+
+    <modal v-show="modalShow">
+      <user-modal v-if="modalUsage === MODAL_USAGE.USER" />
+      <new-keep-modal v-if="modalUsage === MODAL_USAGE.KEEP" />
+      <vault-modal v-if="modalUsage === MODAL_USAGE.VAULT" />
+    </modal>
   </div>
 </template>
 
@@ -16,6 +22,15 @@
       let navBarPadding = `${navBar.clientHeight + 20}px`;
       document.body.style.paddingTop = navBarPadding;
       this.$store.commit("setNavBarHeight", navBar.clientHeight);
+    },
+    computed: {
+
+      modalUsage() {
+        return this.$store.state.Modal.modalUsage;
+      },
+      modalShow() {
+        return this.$store.state.Modal.show;
+      }
     }
   }
 </script>

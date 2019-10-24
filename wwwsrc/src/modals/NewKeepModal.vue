@@ -35,6 +35,7 @@
     data() {
       return {
         data: {
+          vault_id: null,
           keep_name: "Grumpy",
           keep_description: "Cat",
           keep_img_url: "https://pbs.twimg.com/profile_images/1080545769034108928/CEzHCTpI_400x400.jpg",
@@ -45,6 +46,13 @@
     methods: {
       save() {
         // this.data.user_id = this.userId();
+        if (this.$store.state.Modal.addNewKeepToVault) {
+          this.data.vault_id = this.$store.state.Vaults.currentVault.vault_id;
+          this.$store.dispatch("createKeepInCurrentVault", this.data);
+          this.cancel();
+          return;
+        }
+
         this.$store.dispatch("createKeep", this.data);
         this.cancel();
       },

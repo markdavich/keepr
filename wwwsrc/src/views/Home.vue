@@ -5,14 +5,14 @@
     <router-link v-else :to="{name: 'login'}">Login</router-link>
     <button class="btn" @click="newKeep">New Keep</button>
 
-    <router-link :to="{name: 'vaults', params: { userId: userId() }}">Vaults</router-link>
+    <router-link :to="{name: 'Vaults', params: { userId: userId() }}">Vaults</router-link>
     <keeps-container :keeps="keeps" :parentId="'home'" />
 
-    <modal v-show="modalShow">
+    <!-- <modal v-show="modalShow">
       <user-modal v-if="modalUsage === MODAL_USAGE.USER" />
       <new-keep-modal v-if="modalUsage === MODAL_USAGE.KEEP" />
       <vault-modal v-if="modalUsage === MODAL_USAGE.VAULT" />
-    </modal>
+    </modal> -->
   </div>
 </template>
 
@@ -23,12 +23,12 @@
       user() {
         return this.$store.state.Auth.user;
       },
-      modalUsage() {
-        return this.$store.state.Modal.modalUsage;
-      },
-      modalShow() {
-        return this.$store.state.Modal.show;
-      },
+      // modalUsage() {
+      //   return this.$store.state.Modal.modalUsage;
+      // },
+      // modalShow() {
+      //   return this.$store.state.Modal.show;
+      // },
       keeps() {
         return this.$store.state.Keeps.keeps;
       }

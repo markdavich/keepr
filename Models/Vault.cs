@@ -11,5 +11,7 @@ namespace Keepr.Models
     public string vault_description { get; set; }
     [Required]
     public string user_id { get; set; }
+
+    public int vault_keep_count {get; set;}
   }
 }

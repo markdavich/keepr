@@ -1,5 +1,5 @@
 <template>
-  <div class="keeps-container">
+  <div :style="offsetTop" class="keeps-container">
     <div class="keeps-column" v-for="index in columnCount" :key="'keeps-array-' + index" v-if="columnCount">
       <keep v-for="keep in columns[index - 1]" :key="keep.keep_id" :keep="keep" />
     </div>
@@ -7,17 +7,19 @@
 </template>
 
 <script>
+  import Vue from 'vue';
   import _ from 'lodash';
   export default {
     name: 'keeps-container',
     props: {
-      keeps: { type: Array, required: true },
-      parentId: { type: String, required: true }
+      // keeps: { type: Array, required: true },
+      parentId: { type: String, required: true },
+      topOffset: 0
     },
     data() {
       return {
         columnCount: null,
-        columns: [],
+        columns: null,
         parent: {},
         debounceResizeWindow: function () { }
       }
@@ -25,10 +27,33 @@
     computed: {
       columnWidth() {
         return this.$store.state.Settings.display.columnWidth;
+      },
+      keeps() {
+        return this.$store.state.Keeps.keeps;
+      },
+      offsetTop() {
+        return ""
+
+        if (this.topOffset == 0) {
+          return ""
+        }
+
+        return {
+          top: `${this.topOffset}px`
+        }
+      }
+    },
+    watch: {
+      keeps() {
+        this.setKeepsColumns(this.columnCount);
       }
     },
     methods: {
       setKeepsColumns(columnCount) {
+        if (!columnCount) {
+          return;
+        }
+
         let keeps = this.keeps;
         let keepsColumns = [];
 
@@ -55,19 +80,21 @@
         };
 
         this.setKeepsColumns(computedColumnCount);
-
         this.columnCount = computedColumnCount;
       }
     },
     mounted() {
+      this.columnCount = null;
       this.parent = document.getElementById(this.parentId);
       this.debounceResizeWindow = _.debounce(this.resizeWindow, 100);
+      window.addEventListener('resize', this.debounceResizeWindow);
 
       this.$nextTick(() => {
-        window.addEventListener('resize', this.debounceResizeWindow);
+        // Tried watchers
+        // Tried computed property getters and setters
         setTimeout(() => {
-          window.dispatchEvent(new Event('resize'));
-        }, 500)
+          this.resizeWindow();
+        }, 500);
       })
     },
     beforeDestroy() {
@@ -75,7 +102,6 @@
     }
   }
 </script>
-
 
 <style scoped>
   .keeps-container {

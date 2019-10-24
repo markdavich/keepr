@@ -1,7 +1,12 @@
 <template>
   <div class="vault-list-item" @click="vaultClick">
-    <div class="vault-name">{{ vault.vault_name }}</div>
-    <div class="vault-description">{{ vault.vault_description }}</div>
+    <div class="vault-text">
+      <div class="vault-name">{{ vault.vault_name }}</div>
+      <div class="vault-description">{{ vault.vault_description }}</div>
+    </div>
+    <div class="vault-keep-count">
+      {{ vault.vault_keep_count }} Keeps
+    </div>
   </div>
 </template>
 
@@ -13,6 +18,7 @@
     },
     methods: {
       vaultClick() {
+        this.$store.dispatch("setActiveVault", this.vault);
         this.$parent.$parent.$refs.VaultsSlider.closeSlider();
       }
     }
@@ -22,6 +28,11 @@
 
 <style scoped>
   .vault-list-item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+
     margin: 15px;
     margin-top: 10px;
     margin-bottom: 0;
@@ -30,6 +41,29 @@
     border: solid rgba(77, 35, 35, 0.644) 1px;
     box-shadow: 1px 1px 2px rgba(7, 0, 0, 0.664);
     cursor: pointer;
+  }
+
+  .vault-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .vault-keep-count {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+
+    background-color: rgba(255, 175, 2, 0.671);
+    color: white;
+
+    border-radius: 5px;
+
+    padding: 10px;
   }
 
   .vault-name {

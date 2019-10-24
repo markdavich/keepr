@@ -32,7 +32,7 @@
         this.$store.dispatch("logout");
       },
       goToDashboard() {
-        this.$router.push({ name: 'user', params: { userId: this.userId() } });
+        this.$router.push({ name: 'Keeps', params: { userId: this.userId() } });
       }
     }
   };

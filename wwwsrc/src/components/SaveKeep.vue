@@ -10,8 +10,8 @@
   </div>
 </template>
 
-
 <script>
+  import Vue from 'vue';
   export default {
     name: 'save-keep',
     props: {

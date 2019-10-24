@@ -2,7 +2,8 @@ export default {
   state: {
     modalUsage: 0,
     show: false,
-    newValutKeep: null // This is an object {}
+    newValutKeep: null, // This is an object {}
+    addNewKeepToVault: false
   },
 
   mutations: {
@@ -23,6 +24,12 @@ export default {
     closeNewValultForKeep(state) {
       state.newValutKeep = null;
     },
+
+    showNewKeepForVault(state, modalUsage) {
+      state.addNewKeepToVault = true;
+      state.modalUsage = modalUsage;
+      state.show = true;
+    }
   },
 
   actions: {
@@ -45,6 +52,10 @@ export default {
     closeNewVaultForKeep({ commit, dispatch }) {
       commit("closeNewValultForKeep");
       dispatch("closeModal");
+    },
+
+    showNewKeepForVault({ commit }, modalUsage) {
+      commit("showNewKeepForVault", modalUsage);
     }
   }
 }

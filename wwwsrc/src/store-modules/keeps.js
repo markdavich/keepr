@@ -17,37 +17,55 @@ export default {
   state: {
     activeKeep: null, // This is a Keep object {}
     keeps: []
-    // keepsColumns: {
-    //   // 0: [ Array of keeps ],
-    //   // 1: [ Array of keeps ]
-    // }
   },
   mutations: {
     createKeep(state, keep) {
       state.keeps.push(keep);
     },
     getAllKeeps(state, keeps) {
-      state.keeps = keeps;
+      Vue.set(state, 'keeps', keeps);
     },
-    // setKeepsColumns(state, keepsColumns) {
-    //   Vue.set(state, "keepsColumns", keepsColumns);
-    // },
     setActiveKeep(state, keep) {
       state.activeKeep = keep;
-
+    },
+    editKeep(state, keep) {
       state.keeps.splice(
         state.keeps.findIndex(keep => keep.keep_id === keep.keep_id), 1, keep
       );
     }
   },
   actions: {
-    async createKeep({ commit, dispatch }, keep) {
+    async createKeep({ commit, dispatch, rootState }, keep) {
       try {
-        let endPoint = ``;
         let axiosResponse = await api.post("", keep);
         if (axiosResponse) {
-          commit("createKeep", axiosResponse.data);
-          // dispatch("setKeepsColumns");
+          let keepId = axiosResponse.data;
+
+          let endPoint = `${keepId}`;
+
+          axiosResponse = await api.get(endPoint);
+
+          if (axiosResponse) {
+            let newKeep = axiosResponse.data;
+            commit("createKeep", newKeep);
+            commit("setActiveKeep", newKeep);
+
+            if (keep.vault_id) {
+              let activeVault = rootState.Vaults.currentVault;
+
+              let vaultKeepMap = {
+                vault_id: keep.vault_id,
+                keep_id: newKeep.keep_id,
+                user_id: "fake-user"
+              }
+
+              dispatch("addKeepToVaultFromVaultsView", vaultKeepMap); // This dispatches getAllKeeps
+              dispatch("setActiveVault", activeVault);
+              dispatch("getVaultKeeps", activeVault.vault_id);
+
+              rootState.Modal.addNewKeepToVault = false;
+            }
+          }
         }
       } catch (error) {
         console.warn("store-modules > keeps.js > actions > createKeep()")
@@ -56,11 +74,9 @@ export default {
     },
     async getAllKeeps({ commit, dispatch }) {
       try {
-        let endPoint = ``;
         let axiosResponse = await api.get("");
         if (axiosResponse) {
           commit("getAllKeeps", axiosResponse.data);
-          // dispatch("setKeepsColumns");
         }
       } catch (error) {
         console.warn("store-modules > keeps.js > actions > getAllKeeps()");
@@ -68,40 +84,70 @@ export default {
       }
     },
 
-    // Pass 'rootState' in order to get access to other store modules
-    // EXAMPLE: rootState.ModuleName.statePropertyName
-    // setKeepsColumns({ commit, dispatch, state, rootState }) {
-    //   dispatch("setColumnCount");
-    //   let columnCount = rootState.Settings.display.columnCount;
-    //   let keeps = state.keeps;
-    //   let keepsColumns = {};
-
-    //   // Create all the keys with a cooresponding array
-    //   for (let i = 0; i < columnCount; i++) {
-    //     keepsColumns[i] = []
-    //   };
-
-    //   // Add all the keeps to the columns
-    //   for (let i = 0; i < keeps.length; i++) {
-    //     let key = i % columnCount;
-    //     keepsColumns[key].push(keeps[i]);
-    //   };
-
-    //   commit("setKeepsColumns", keepsColumns);
-    // },
-
-    async setActiveKeep({ commit, dispatch }, keepId) {
+    setActiveKeepById({ commit, state }, keepId) {
       try {
-        let endPoint = `${keepId}/view`;
-        let axiosResponse = await api.put(endPoint);
-        if (axiosResponse) {
-          let keep = axiosResponse.data;
-          commit("setActiveKeep", keep);
-          dispatch("setKeepsColumns");
+
+        let activeKeep = state.keeps.find(keep => {
+          return keep.keep_id == keepId
+        })
+
+        if (activeKeep) {
+          commit("setActiveKeep", activeKeep);
         }
+
+        // let endPoint = `${keepId}/view`;
+        // let axiosResponse = await api.put(endPoint);
+        // if (axiosResponse) {
+        //   let keep = axiosResponse.data;
+        //   commit("setActiveKeep", keep);
+        // }
       } catch (error) {
         console.warn("store-modules > keeps.js > actions > setActiveKeep()");
         console.error(error);
+      }
+    },
+
+    getUserKeeps({ commit, rootState }) {
+      let userId = rootState.Auth.user.user_id;
+      let keeps = rootState.Keeps.keeps;
+      let userKeeps = keeps.filter(keep => {
+        return keep.user_id === userId;
+      });
+      commit("getAllKeeps", userKeeps);
+    },
+
+    async createKeepInCurrentVault({ commit, dispatch, rootState }, keep) {
+      try {
+        // Create Keep
+        let axiosResponse = await api.post("", keep);
+
+        // Get Keep
+        let keepId = axiosResponse.data;
+        let endPoint = `${keepId}`;
+        axiosResponse = await api.get(endPoint);
+        let newKeep = axiosResponse.data;
+
+        // Make vault-keep-map object
+        let vaultKeepMap = {
+          vault_id: keep.vault_id,
+          keep_id: newKeep.keep_id,
+          user_id: "fake-user"
+        }
+
+        // AddKeepToVault
+        dispatch("addKeepToVaultFromVaultsView", vaultKeepMap); // This dispatches getAllKeeps
+
+        // Get Logged in user vaults to update the count
+        dispatch("getLoggedInUserVaults");
+
+        // Add the new keep to the keeps
+        commit("createKeep", newKeep);
+
+        rootState.Modal.addNewKeepToVault = false;
+
+        // 
+      } catch (error) {
+
       }
     }
   }

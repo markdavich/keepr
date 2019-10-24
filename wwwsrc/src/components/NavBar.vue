@@ -2,10 +2,12 @@
   <!-- <div id="nav-bar" class="nav-bar">
 
   </div> -->
-  <nav id="nav-bar" class="navbar navbar-light bg-light fixed-top">
+  <nav id="nav-bar" class="navbar navbar-light bg-light fixed-top justify-space-between">
     <a class="navbar-brand">
       <router-link to="/">KeepR</router-link>
     </a>
+
+    <div class="page-name">{{ pageName }}</div>
 
     <form class="form">
       <logged-in-user />
@@ -17,13 +19,11 @@
 <script>
   export default {
     name: 'nav-bar',
-    props: [],
-    components: {},
-    data() {
-      return {}
-    },
-    computed: {},
-    methods: {}
+    computed: {
+      pageName() {
+        return this.$route.name;
+      }
+    }
   }
 </script>
 
@@ -33,5 +33,9 @@
     /* position: fixed;
     top: 0;
     width: 100%; */
+  }
+
+  .page-name {
+    font-size: 2.32em;
   }
 </style>

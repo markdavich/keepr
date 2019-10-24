@@ -46,9 +46,6 @@
       },
       closeSlider() {
         this.slideWidth = 0;
-      },
-      slideOutContent() {
-
       }
     }
   }

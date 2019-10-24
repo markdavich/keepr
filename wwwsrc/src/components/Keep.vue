@@ -20,7 +20,7 @@
     },
     methods: {
       keepClick() {
-        this.$router.push({ name: "keep", params: { keepId: this.keep.keep_id } });
+        this.$router.push({ name: "Keep", params: { keepId: this.keep.keep_id } });
       }
     }
   }

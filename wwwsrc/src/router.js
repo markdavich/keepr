@@ -20,7 +20,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: Home,
       beforeEnter(to, from, next) {
         Store.dispatch("getLoggedInUserVaults");
@@ -35,17 +35,17 @@ export default new Router({
     },
     {
       path: '/keeps/:keepId',
-      name: 'keep',
+      name: 'Keep',
       component: KeepView,
       props: true,
       beforeEnter(to, from, next) {
-        Store.dispatch("setActiveKeep", to.params.keepId);
+        Store.dispatch("setActiveKeepById", to.params.keepId);
         next();
       }
     },
     {
       path: '/user/:userId',
-      name: 'user',
+      name: 'Keeps',
       component: UserView,
       props: true,
       beforeEnter(to, from, next) {
@@ -56,10 +56,10 @@ export default new Router({
     },
     {
       path: '/user/:userId/vaults',
-      name: 'vaults',
+      name: 'Vaults',
       component: VaultsView,
       props: true,
-      beforeEnter(to, from , next) {
+      beforeEnter(to, from, next) {
         Store.dispatch("getLoggedInUserVaults"); // store-modules > vaults.js
         next();
       }

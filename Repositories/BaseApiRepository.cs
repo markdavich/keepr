@@ -32,6 +32,11 @@ namespace Keepr.Repositories
           continue;
         }
 
+        if ((column_name != "user_id") && (column_name.Substring(0, 4) == "user"))
+        {
+          continue;
+        }
+
         if (first)
         {
           result += $" `{column_name}` = @{column_name}";
@@ -66,6 +71,11 @@ namespace Keepr.Repositories
           continue;
         }
 
+        if ((column_name != "user_id") && (column_name.Substring(0, 4) == "user"))
+        {
+          continue;
+        }
+
         if (first)
         {
           columns += $"`{column_name}`";
@@ -88,7 +98,7 @@ namespace Keepr.Repositories
       return result;
     }
 
-    public IEnumerable<T> GetByUserId(string userId)
+    public virtual IEnumerable<T> GetByUserId(string userId)
     {
       string sql = $"SELECT * FROM {_table} a left join user b on a.user_id = b.user_id  WHERE a.user_id = @userId;";
       return _db.Query<T>(sql, new { userId });
@@ -101,19 +111,19 @@ namespace Keepr.Repositories
       return result;
       // return _db.Query<T>(sql);
     }
-    internal T Get(int id)
+    public T Get(int id)
     {
       string sql = $"SELECT * FROM {_table} a left join user b on a.user_id = b.user_id WHERE {_table}_id = @id";
       return _db.QueryFirstOrDefault<T>(sql, new { id });
     }
 
-    internal int Create(T data, string user_id)
+    public int Create(T data, string user_id)
     {
       string sql = GetCreateSql(user_id);
       return _db.ExecuteScalar<int>(sql, data);
     }
 
-    internal T Edit(T data, int id)
+    public T Edit(T data, int id)
     {
       string sql = GetUpdateSql(id);
       return _db.QueryFirstOrDefault<T>(sql, data);

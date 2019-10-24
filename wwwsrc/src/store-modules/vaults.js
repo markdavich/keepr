@@ -22,7 +22,7 @@ export default {
     setVaults(state, currentUserVaults) {
       state.currentUserVaults = currentUserVaults;
     },
-    setCurrentVault(state, currentVault) {
+    setActiveVault(state, currentVault) {
       state.currentVault = currentVault;
     },
     createVault(state, vault) {
@@ -58,12 +58,19 @@ export default {
       }
     },
 
-    async getLoggedInUserVaults({ commit }) {
+    async getLoggedInUserVaults({ commit, state }) {
       try {
         let endPoint = `user`;
         let axiosResponse = await api.get(endPoint);
         let currentUserVaults = axiosResponse.data;
         commit("setVaults", currentUserVaults);
+
+        if (state.currentVault) {
+          commit("setActiveVault", state.currentVault);
+        } else {
+          commit("setActiveVault", state.currentUserVaults[0]);
+        }
+
       } catch (error) {
         console.warn("store-modules > vaults.js > actions > getVaultsByUserId()");
         console.error(error);
@@ -71,12 +78,11 @@ export default {
     },
 
     clearCurrentVault({ commit }) {
-      commit("setCurrentVault", null);
+      commit("setActiveVault", null);
     },
 
     async addKeepToVault({ commit, dispatch }, vaultKeepMap) {
       try {
-        dispatch;
         let endPoint = `${vaultKeepMap.vault_id}/keeps`;
         await api.post(endPoint, vaultKeepMap);
         dispatch("getAllKeeps");
@@ -84,7 +90,43 @@ export default {
         console.warn("store-modules > vaults.js > actions > addKeepToVault()");
         console.error(error);
       }
+    },
+
+    async addKeepToVaultFromVaultsView({ commit, dispatch }, vaultKeepMap) {
+      try {
+        let endPoint = `${vaultKeepMap.vault_id}/keeps`;
+        await api.post(endPoint, vaultKeepMap);
+      } catch (error) {
+        console.warn("store-modules > vaults.js > actions > addKeepToVault()");
+        console.error(error);
+      }
+    },
+
+    async getVaultKeeps({ commit }, vaultId) {
+      try {
+        let endPoint = `${vaultId}/keeps`;
+        let axiosResponse = await api.get(endPoint);
+        if (axiosResponse) {
+          commit("getAllKeeps", axiosResponse.data);
+        }
+      } catch (error) {
+        console.warn("store-modules > keeps.js > actions > getAllKeeps()");
+        console.error(error);
+      }
+    },
+
+    async setActiveVault({ commit, dispatch }, vault) {
+      try {
+        let endPoint = `${vault.vault_id}/keeps`;
+        let axiosResponse = await api.get(endPoint);
+        if (axiosResponse) {
+          commit("getAllKeeps", axiosResponse.data);
+          commit("setActiveVault", vault);
+        }
+      } catch (error) {
+        console.warn("store-modules > keeps.js > actions > getAllKeeps()");
+        console.error(error);
+      }
     }
   }
-
 }

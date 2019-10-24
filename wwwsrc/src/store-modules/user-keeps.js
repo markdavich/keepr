@@ -42,14 +42,7 @@ export default {
 
     // Pass 'rootState' in order to get access to other store modules
     // EXAMPLE: rootState.ModuleName.statePropertyName
-    getUserKeeps({ commit, rootState }) {
-      let userId = rootState.Auth.user.user_id;
-      let keeps = rootState.Keeps.keeps;
-      let userKeeps = keeps.filter(keep => {
-        return keep.user_id === userId;
-      });
-      commit("setUserKeeps", userKeeps);
-    }
+
   }
 
 }
