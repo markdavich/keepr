@@ -1,10 +1,12 @@
 <template>
-  <div class="home">
+  <div class="home" id="home">
     <!-- <h1>Welcome Home {{user.username}}</h1> -->
     <button v-if="user.user_id" @click="logout">logout</button>
     <router-link v-else :to="{name: 'login'}">Login</router-link>
     <button class="btn" @click="newKeep">New Keep</button>
-    <keeps />
+
+    <router-link :to="{name: 'vaults', params: { userId: userId() }}">Vaults</router-link>
+    <keeps-container :keeps="keeps" :parentId="'home'" />
 
     <modal v-show="modalShow">
       <user-modal v-if="modalUsage === MODAL_USAGE.USER" />
@@ -26,6 +28,9 @@
       },
       modalShow() {
         return this.$store.state.Modal.show;
+      },
+      keeps() {
+        return this.$store.state.Keeps.keeps;
       }
     },
     methods: {
@@ -36,23 +41,8 @@
         this.$store.dispatch("showModal", this.MODAL_USAGE.KEEP);
       },
       resizeWindow() {
-        if (this.$route.name == "user") {
-          this.$store.dispatch("resizeUserView");
-        } else {
-          this.$store.dispatch("resizeWindow");
-        }
+        this.$store.dispatch("resizeWindow");
       }
-    },
-    mounted() {
-      this.$nextTick(() => {
-        this.resizeWindow();
-        window.addEventListener('resize', this.resizeWindow);
-        this.$store.dispatch("getAllKeeps");
-        this.$store.dispatch("getLoggedInUserVaults");
-      });
-    },
-    beforeDestroy() {
-      window.removeEventListener('resize', this.resizeWindow);
     }
   };
 </script>

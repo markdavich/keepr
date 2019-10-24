@@ -4,9 +4,7 @@
   </div> -->
   <nav id="nav-bar" class="navbar navbar-light bg-light fixed-top">
     <a class="navbar-brand">
-      KeepR
-      <i class="fas fa-headphones"></i>
-      <!-- <img class="record" id="record" src="https://f4.bcbits.com/img/0009915813_10.jpg" /> -->
+      <router-link to="/">KeepR</router-link>
     </a>
 
     <form class="form">

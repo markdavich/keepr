@@ -90,20 +90,20 @@ namespace Keepr.Repositories
 
     public IEnumerable<T> GetByUserId(string userId)
     {
-      string sql = $"SELECT * FROM {_table} WHERE user_id = @userId;";
+      string sql = $"SELECT * FROM {_table} a left join user b on a.user_id = b.user_id  WHERE a.user_id = @userId;";
       return _db.Query<T>(sql, new { userId });
     }
 
     public IEnumerable<T> Get()
     {
-      string sql = $"SELECT * FROM {_table};";
+      string sql = $"SELECT * FROM {_table}  a left join user b on a.user_id = b.user_id  ;";
       IEnumerable<T> result = _db.Query<T>(sql);
       return result;
       // return _db.Query<T>(sql);
     }
     internal T Get(int id)
     {
-      string sql = $"SELECT * FROM {_table} WHERE {_table}_id = @id";
+      string sql = $"SELECT * FROM {_table} a left join user b on a.user_id = b.user_id WHERE {_table}_id = @id";
       return _db.QueryFirstOrDefault<T>(sql, new { id });
     }
 

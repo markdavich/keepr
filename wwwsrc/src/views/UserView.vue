@@ -1,5 +1,7 @@
 <template>
   <div class="user-view">
+    <slide-out ref="Vaults" :myRef="'Vaults'" />
+    <button @click="slideOut"></button>
     <div class="flex-row">
       <div class="flex-col size-1">
         <h1>Your Vaults</h1>
@@ -7,7 +9,7 @@
       </div>
       <div id="user-keeps" class="flex-col size-2">
         <h1>Your Keeps</h1>
-        <user-keeps />
+        <keeps-container :keeps="keeps" :parentId="'user-keeps'" />
       </div>
     </div>
   </div>
@@ -16,7 +18,17 @@
 
 <script>
   export default {
-    name: 'user-view'
+    name: 'user-view',
+    computed: {
+      keeps() {
+        return this.$store.state.UserKeeps.userKeeps;
+      }
+    },
+    methods: {
+      slideOut() {
+        this.$refs.Vaults.openSlider();
+      }
+    }
   }
 </script>
 
@@ -26,12 +38,15 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
   }
 
   .flex-col {
     display: flex;
     flex-direction: column;
     min-width: 300px !important;
+    height: 72vh !important;
+    overflow-y: scroll;
   }
 
   .size-1 {

@@ -1,9 +1,7 @@
 <template>
-  <div class="user-keeps" ref="userKeeps" v-if="clientWidth">
-    <div class="user-keeps-column" v-for="(keepsArray, index) in columns" :key="'keeps-array-' + index">
-
-      keepsArray.length = {{ keepsArray.length }}
-      <keep v-for="keep in keepsArray" :key="keep.keep_id" :keep="keep" />
+  <div class="user-keeps">
+    <div class="user-keeps-column" v-for="index in columnCount - 1" :key="'keeps-array-' + index">
+      <keep v-for="keep in columns[index]" :key="keep.keep_id" :keep="keep" />
     </div>
   </div>
 </template>
@@ -11,55 +9,30 @@
 <script>
   export default {
     name: 'user-keeps',
-    props: [],
-    components: {},
-    data() {
-      return {
-        userKeeps: {},
-        // columns: null,
-        clientWidth: null,
-        testColumns: null
-      }
-    },
     computed: {
-      keeps() {
-        let userId = this.userId();
-        return this.$store.state.Keeps.keeps.filter(keep => {
-          return keep.user_id === userId;
-        });
-      },
       columns() {
-        let columnCount = Math.floor(
-          this.clientWidth / this.$store.state.Settings.display.columnWidth
-        );
-
-        // Create the array of arrays
-        let columns = [];
-        for (let i = 0; i < columnCount; i++) {
-          columns.push([]);
-        }
-
-        let keeps = this.keeps;
-
-        for (let i = 0; i < keeps.length; i++) {
-          columns[i % columnCount].push(keeps[i]);
-        }
-
-        this.testColumns = columns;
-        return columns;
+        return this.$store.state.UserKeeps.userKeepsColumns;
+      },
+      columnCount() {
+        return this.$store.state.Settings.display.columnCount;
       }
     },
     watch: {
 
     },
     methods: {
-
+      resizeWindow() {
+        this.$store.dispatch("resizeUserView");
+      }
     },
     mounted() {
       this.$nextTick(() => {
-        this.clientWidth = this.$el.parentElement.clientWidth;
-        let userKeeps = document.getElementById("user-keeps");
+        this.resizeWindow();
+        window.addEventListener('resize', this.resizeWindow);
       });
+    },
+    beforeDestroy() {
+      window.removeEventListener('resize', this.resizeWindow);
     }
   }
 </script>

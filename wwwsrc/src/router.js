@@ -11,6 +11,8 @@ import KeepView from './views/KeepView.vue';
 import Login from './views/Login.vue'
 // @ts-ignore
 import UserView from './views/UserView.vue';
+// @ts-ignore
+import VaultsView from './views/VaultsView.vue';
 
 Vue.use(Router, Store)
 
@@ -22,6 +24,7 @@ export default new Router({
       component: Home,
       beforeEnter(to, from, next) {
         Store.dispatch("getLoggedInUserVaults");
+        Store.dispatch("getAllKeeps");
         next();
       }
     },
@@ -46,7 +49,18 @@ export default new Router({
       component: UserView,
       props: true,
       beforeEnter(to, from, next) {
-        Store.dispatch("getLoggedInUserVaults");
+        Store.dispatch("getLoggedInUserVaults"); // store-modules > vaults.js
+        Store.dispatch("getUserKeeps"); // store-modules > user-keeps.js
+        next();
+      }
+    },
+    {
+      path: '/user/:userId/vaults',
+      name: 'vaults',
+      component: VaultsView,
+      props: true,
+      beforeEnter(to, from , next) {
+        Store.dispatch("getLoggedInUserVaults"); // store-modules > vaults.js
         next();
       }
     }

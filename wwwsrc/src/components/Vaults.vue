@@ -24,8 +24,6 @@
     flex-direction: column;
     /* justify-content: space-between; */
     align-content: flex-start;
-    height: 72vh !important;
-    overflow-y: scroll;
     width: 100%;
     margin-left: 1px;
   }

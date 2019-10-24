@@ -12,13 +12,19 @@
     name: "app",
     mounted() {
       // This makes is so the content starts 20px below the nav-bar
-      let navBar = document.getElementById('nav-bar')
-      document.body.style.paddingTop = `${navBar.clientHeight + 20}px`
+      let navBar = document.getElementById('nav-bar');
+      let navBarPadding = `${navBar.clientHeight + 20}px`;
+      document.body.style.paddingTop = navBarPadding;
+      this.$store.commit("setNavBarHeight", navBar.clientHeight);
     }
   }
 </script>
 
 <style>
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
   :root {
     --info-border: rgb(0, 180, 69);
     --info-bg: rgba(255, 255, 255, 0.507);

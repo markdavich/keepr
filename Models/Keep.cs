@@ -21,5 +21,11 @@ namespace Keepr.Models
     public int keep_share_count { get; set; } = 0;
 
     public int keep_keep_count { get; set; } = 0;
+
+    public string user_username { get; set; }
+
+    public string user_img_url {get; set;}
+
+    public string user_color {get; set;}
   }
 }

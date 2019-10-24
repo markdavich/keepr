@@ -16,11 +16,11 @@ let api = Axios.create({
 export default {
   state: {
     activeKeep: null, // This is a Keep object {}
-    keeps: [],
-    keepsColumns: {
-      // 0: [ Array of keeps ],
-      // 1: [ Array of keeps ]
-    }
+    keeps: []
+    // keepsColumns: {
+    //   // 0: [ Array of keeps ],
+    //   // 1: [ Array of keeps ]
+    // }
   },
   mutations: {
     createKeep(state, keep) {
@@ -29,9 +29,9 @@ export default {
     getAllKeeps(state, keeps) {
       state.keeps = keeps;
     },
-    setKeepsColumns(state, keepsColumns) {
-      Vue.set(state, "keepsColumns", keepsColumns);
-    },
+    // setKeepsColumns(state, keepsColumns) {
+    //   Vue.set(state, "keepsColumns", keepsColumns);
+    // },
     setActiveKeep(state, keep) {
       state.activeKeep = keep;
 
@@ -47,7 +47,7 @@ export default {
         let axiosResponse = await api.post("", keep);
         if (axiosResponse) {
           commit("createKeep", axiosResponse.data);
-          dispatch("setKeepsColumns");
+          // dispatch("setKeepsColumns");
         }
       } catch (error) {
         console.warn("store-modules > keeps.js > actions > createKeep()")
@@ -60,7 +60,7 @@ export default {
         let axiosResponse = await api.get("");
         if (axiosResponse) {
           commit("getAllKeeps", axiosResponse.data);
-          dispatch("setKeepsColumns");
+          // dispatch("setKeepsColumns");
         }
       } catch (error) {
         console.warn("store-modules > keeps.js > actions > getAllKeeps()");
@@ -70,25 +70,25 @@ export default {
 
     // Pass 'rootState' in order to get access to other store modules
     // EXAMPLE: rootState.ModuleName.statePropertyName
-    setKeepsColumns({ commit, dispatch, state, rootState }) {
-      dispatch("setColumnCount");
-      let columnCount = rootState.Settings.display.columnCount;
-      let keeps = state.keeps;
-      let keepsColumns = {};
+    // setKeepsColumns({ commit, dispatch, state, rootState }) {
+    //   dispatch("setColumnCount");
+    //   let columnCount = rootState.Settings.display.columnCount;
+    //   let keeps = state.keeps;
+    //   let keepsColumns = {};
 
-      // Create all the keys with a cooresponding array
-      for (let i = 0; i < columnCount; i++) {
-        keepsColumns[i] = []
-      };
+    //   // Create all the keys with a cooresponding array
+    //   for (let i = 0; i < columnCount; i++) {
+    //     keepsColumns[i] = []
+    //   };
 
-      // Add all the keeps to the columns
-      for (let i = 0; i < keeps.length; i++) {
-        let key = i % columnCount;
-        keepsColumns[key].push(keeps[i]);
-      };
+    //   // Add all the keeps to the columns
+    //   for (let i = 0; i < keeps.length; i++) {
+    //     let key = i % columnCount;
+    //     keepsColumns[key].push(keeps[i]);
+    //   };
 
-      commit("setKeepsColumns", keepsColumns);
-    },
+    //   commit("setKeepsColumns", keepsColumns);
+    // },
 
     async setActiveKeep({ commit, dispatch }, keepId) {
       try {
