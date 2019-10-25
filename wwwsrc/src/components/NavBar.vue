@@ -9,7 +9,7 @@
 
     <div class="page-name">{{ pageName }}</div>
 
-    <form class="form">
+    <form class="form" v-if="userId()">
       <logged-in-user />
     </form>
   </nav>

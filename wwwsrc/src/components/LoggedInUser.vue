@@ -7,9 +7,9 @@
     <div class="dropdown-menu">
       <a class="dropdown-item" @click="editUser">Edit</a>
       <a class="dropdown-item" @click="logout">Logout</a>
-      <a class="dropdown-item" @click="goToKeepsView">Your Keeps</a>
-      <a class="dropdown-item" @click="goToVaultsView">Your Vaults</a>
-      <a class="dropdown-item" @click="newKeep">New Keeps</a>
+      <a class="dropdown-item nk-btn orange" @click="goToKeepsView">Your Keeps</a>
+      <a class="dropdown-item nk-btn yellow" @click="goToVaultsView">Your Vaults</a>
+      <a class="dropdown-item nk-btn green" @click="newKeep">New Keep</a>
     </div>
   </div>
 </template>
@@ -73,5 +73,29 @@
   h3 {
     margin-top: 10px;
     margin-right: 10px;
+  }
+
+  .green {
+    background-color: rgb(48, 221, 48);
+  }
+
+  .yellow {
+    background-color: rgb(207, 226, 38);
+  }
+
+  .orange {
+    background-color: rgb(255, 145, 0);
+  }
+
+  .nk-btn {
+    color: rgba(255, 255, 255, 0.808);
+    border-radius: 5px;
+    margin: 5px;
+    width: 93%;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.808);
+  }
+
+  .nk-btn:hover {
+    box-shadow: 2px 2px 8px black;
   }
 </style>

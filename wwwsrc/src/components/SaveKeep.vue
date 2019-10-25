@@ -1,6 +1,6 @@
 <template>
   <!-- <button class="btn btn-outline-danger hide save-keep">Keep</button> -->
-  <div class="hide save-keep">
+  <div class="hide save-keep" v-if="userId()">
     <button class="btn btn-outline-danger save-keep" data-toggle="dropdown">Keep</button>
     <div class="dropdown-menu" v-bind:class="{ 'dropdown-menu-right': isLastColumn }">
       <a class="dropdown-item" @click="createNewVault">New Vault...</a>

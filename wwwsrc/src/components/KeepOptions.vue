@@ -76,7 +76,8 @@
         this.$store.commit("setActiveKeep", activeKeep);
       },
       togglePublic() {
-        let keep = Object.create(this.dynamicKeep);
+        let keep = new Object.create(this.dynamicKeep);
+
         let isPublic = keep.keep_is_public;
 
         keep.keep_is_public = !isPublic;
