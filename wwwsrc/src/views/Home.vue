@@ -1,7 +1,8 @@
 <template>
   <div class="home" id="home">
-    <button v-if="user.user_id" @click="logout">logout</button>
-    <router-link v-else :to="{name: 'login'}">Login</router-link>
+    <!-- <button v-if="user.user_id" @click="logout">logout</button>
+    <router-link v-else :to="{name: 'login'}">Login</router-link> -->
+    <router-link v-if="!user.user_id" :to="{name: 'login'}">Login</router-link>
     <keeps-container :keeps="keeps" :parentId="'home'" />
   </div>
 </template>
