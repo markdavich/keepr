@@ -40,10 +40,17 @@ export default {
       let keep = payload.keep;
       try {
         let axiosResponse = await api.post("", vault);
+
         if (axiosResponse) {
           let vault_id = axiosResponse.data;
           vault.vault_id = vault_id;
+
           commit("createVault", vault);
+
+          await dispatch("setActiveVault", vault);
+          await dispatch("getLoggedInUserVaults");
+          await dispatch("loadKeepsForCurrentVault");
+
           if (keep) {
             let vaultKeepMap = {
               vault_id: vault_id,
@@ -56,6 +63,21 @@ export default {
       } catch (error) {
         console.warn("store-modules > vaults.js > actions > createVault()")
         console.error(error)
+      }
+    },
+
+
+    async deleteVault({ commit, dispatch }, vault) {
+      try {
+        let endPoint = `${vault.vault_id}`;
+        await api.delete(endPoint);
+
+        await dispatch("getLoggedInUserVaults");
+        await dispatch("loadKeepsForCurrentVault");
+
+      } catch (error) {
+        console.warn("store-modules > vaults.js > actions > deleteVault()");
+        console.error(error);
       }
     },
 
@@ -105,13 +127,20 @@ export default {
           commit("getAllKeeps", axiosResponse.data);
         }
       } catch (error) {
-        console.warn("store-modules > keeps.js > actions > getAllKeeps()");
+        console.warn("store-modules > keeps.js > actions > addKeepToVaultFromVaultsView()");
         console.error(error);
       }
     },
 
     async setActiveVault({ commit, dispatch }, vault) {
       try {
+        if (!vault) {
+          commit("setActiveVault", vault);
+          await dispatch("getLoggedInUserVaults");
+          await dispatch("loadKeepsForCurrentVault");
+          return;
+        }
+
         let endPoint = `${vault.vault_id}/keeps`;
         let axiosResponse = await api.get(endPoint);
         if (axiosResponse) {
@@ -119,7 +148,7 @@ export default {
           commit("setActiveVault", vault);
         }
       } catch (error) {
-        console.warn("store-modules > keeps.js > actions > getAllKeeps()");
+        console.warn("store-modules > keeps.js > actions > setActiveVault()");
         console.error(error);
       }
     },

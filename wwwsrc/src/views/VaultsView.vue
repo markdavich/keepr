@@ -17,8 +17,8 @@
       <div class="vvh-row">
         <click-edit :initialValue="vault.vault_description" :placeHolder="'Valut Description...'"
           :enterKeyPress="saveVaultDescripton" v-if="current" />
-        <button class="vault-button btn btn-warning">Remove Vault</button>
-        <button class="vault-button btn btn-primary">New Vault</button>
+        <button class="vault-button btn btn-warning" @click="deleteVault">Remove Vault</button>
+        <button class="vault-button btn btn-primary" @click="createVault">New Vault</button>
         <button class="new-keep-button btn btn-success" @click="createNewKeepInThisVault">&#43;</button>
       </div>
 
@@ -86,6 +86,12 @@
       },
       createNewKeepInThisVault() {
         this.$store.dispatch("showNewKeepForVault", this.MODAL_USAGE.KEEP);
+      },
+      deleteVault() {
+        this.$store.dispatch("deleteVault", this.vault);
+      },
+      createVault() {
+        this.showModal(this.MODAL_USAGE.VAULT);
       }
     }
   }
