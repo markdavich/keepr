@@ -39,5 +39,10 @@ namespace Keepr.Services
       // Need to change tablename_id to id
       return _repo.Edit(data, id);
     }
+
+    internal void Delete(int id)
+    {
+      _repo.Delete(id);
+    }
   }
 }

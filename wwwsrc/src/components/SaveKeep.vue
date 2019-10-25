@@ -73,4 +73,8 @@
     border-top-right-radius: 10px;
     border-bottom-left-radius: 32px;
   }
+
+  a {
+    cursor: pointer;
+  }
 </style>

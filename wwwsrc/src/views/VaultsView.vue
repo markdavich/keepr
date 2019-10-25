@@ -9,7 +9,7 @@
       <div class="vvh-row">
         <click-edit class="vault-name" :initialValue="vault.vault_name" :placeHolder="'Valut Name...'"
           :enterKeyPress="saveVaultName" v-if="current" />
-        <div class="vault-keep-count">
+        <div class="vault-keep-count" v-if="vault && current">
           {{ keepsCount }} Keeps
         </div>
       </div>
@@ -33,7 +33,6 @@
     name: 'vaults-view',
     data() {
       return {
-        headerHeight: 0,
         current: false,
         keepsCount: 0
       }
@@ -49,10 +48,21 @@
         return {
           top: `${this.$store.state.Settings.display.navBarHeight}px`
         }
+      },
+      keeps() {
+        return this.$store.state.Keeps.keeps;
       }
     },
     watch: {
       vault() {
+        this.reload();
+      },
+      keeps() {
+        this.reload();
+      }
+    },
+    methods: {
+      reload() {
         setTimeout(() => {
           this.current = false;
           this.$forceUpdate();
@@ -64,9 +74,7 @@
           this.$forceUpdate();
           this.keepsCount = this.vault.vault_keep_count;
         }, 0);
-      }
-    },
-    methods: {
+      },
       openSlider() {
         this.$refs.VaultsSlider.openSlider();
       },
@@ -79,9 +87,6 @@
       createNewKeepInThisVault() {
         this.$store.dispatch("showNewKeepForVault", this.MODAL_USAGE.KEEP);
       }
-    },
-    mounted() {
-      this.headerHeight = document.getElementById('vaults-view-header').clientHeight + 10;
     }
   }
 </script>

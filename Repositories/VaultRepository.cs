@@ -32,5 +32,11 @@ namespace Keepr.Repositories
       IEnumerable<Vault> result = _vaultDb.Query<Vault>(sql, new { userId });
       return result;
     }
+
+    internal void RemoveKeepFromVault(int vaultId, int keepId)
+    {
+      string sql = $"delete from map_vault_keep where vault_id = @vaultId and keep_id = @keepId;";
+      _vaultDb.Execute(sql, new { vaultId, keepId });
+    }
   }
 }

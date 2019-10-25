@@ -2,7 +2,7 @@
   <div class="keep">
     <img class="keep-img" :src="keep.keep_img_url" @click.self="keepClick" />
     <save-keep :keep="keep" />
-    <keep-options />
+    <keep-options :keep="keep" />
     <keep-info :keep="keep" />
   </div>
 </template>
@@ -50,5 +50,6 @@
     height: 100%;
     width: 100%;
     border-radius: 15px;
+    cursor: pointer;
   }
 </style>

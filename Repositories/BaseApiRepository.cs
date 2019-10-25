@@ -3,6 +3,7 @@ using System.Data;
 using Dapper;
 
 using System.Reflection;
+using System;
 
 namespace Keepr.Repositories
 {
@@ -37,6 +38,12 @@ namespace Keepr.Repositories
           continue;
         }
 
+
+        if (column_name == "vault_keep_count")
+        {
+          continue;
+        }
+
         if (first)
         {
           result += $" `{column_name}` = @{column_name}";
@@ -52,6 +59,12 @@ namespace Keepr.Repositories
       result += $"select * from {_table} where `{id_column}` = {entity_id};";
 
       return result;
+    }
+
+    internal void Delete(int id)
+    {
+      string sql = $"delete from {_table} where {_table}_id = @id;";
+      _db.Execute(sql, new { id });
     }
 
     internal string GetCreateSql(string user_id)
@@ -72,6 +85,11 @@ namespace Keepr.Repositories
         }
 
         if ((column_name != "user_id") && (column_name.Substring(0, 4) == "user"))
+        {
+          continue;
+        }
+
+        if (column_name == "vault_keep_count")
         {
           continue;
         }

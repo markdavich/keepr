@@ -7,7 +7,9 @@
     <div class="dropdown-menu">
       <a class="dropdown-item" @click="editUser">Edit</a>
       <a class="dropdown-item" @click="logout">Logout</a>
-      <a class="dropdown-item" @click="goToDashboard">Dashboard</a>
+      <a class="dropdown-item" @click="goToKeepsView">Your Keeps</a>
+      <a class="dropdown-item" @click="goToVaultsView">Your Vaults</a>
+      <a class="dropdown-item" @click="newKeep">New Keeps</a>
     </div>
   </div>
 </template>
@@ -31,8 +33,14 @@
       logout() {
         this.$store.dispatch("logout");
       },
-      goToDashboard() {
+      goToKeepsView() {
         this.$router.push({ name: 'Keeps', params: { userId: this.userId() } });
+      },
+      goToVaultsView() {
+        this.$router.push({ name: 'Vaults', params: { userId: this.userId() } });
+      },
+      newKeep() {
+        this.$store.dispatch("showModal", this.MODAL_USAGE.KEEP);
       }
     }
   };

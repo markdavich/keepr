@@ -59,23 +59,13 @@ export default {
       }
     },
 
-    async getLoggedInUserVaults({ commit, state }) {
+    async getLoggedInUserVaults({ commit, dispatch, state }) {
       try {
         let endPoint = `user`;
         let axiosResponse = await api.get(endPoint);
         let currentUserVaults = axiosResponse.data;
 
         commit("setVaults", currentUserVaults);
-
-        if (state.currentVault) {
-          let currentVault = state.currentUserVaults.find(vault => {
-            return vault.vault_id == state.currentVault.vault_id
-          })
-          commit("setActiveVault", currentVault);
-        } else {
-          commit("setActiveVault", state.currentUserVaults[0]);
-        }
-
       } catch (error) {
         console.warn("store-modules > vaults.js > actions > getVaultsByUserId()");
         console.error(error);
@@ -130,6 +120,39 @@ export default {
         }
       } catch (error) {
         console.warn("store-modules > keeps.js > actions > getAllKeeps()");
+        console.error(error);
+      }
+    },
+
+    async loadKeepsForCurrentVault({ dispatch, state }) {
+      if (state.currentVault) {
+        let currentVault = state.currentUserVaults.find(vault => {
+          return vault.vault_id == state.currentVault.vault_id
+        })
+        await dispatch("setActiveVault", currentVault);
+      } else {
+        await dispatch("setActiveVault", state.currentUserVaults[0]);
+      }
+    },
+
+    async removeKeepFromVault({ commit, dispatch }, payload) {
+      let vaultKeep = payload.vaultKeep;
+      let keep = payload.keep;
+
+      try {
+        let endPoint = `${vaultKeep.vault_id}/keeps/${vaultKeep.keep_id}`;
+        await api.delete(endPoint);
+
+        // Show the user right away
+        commit("deleteKeep", keep); // Note that Keeps.keeps is holding the keeps for the avtive vault
+        commit("setActiveKeep", null);
+
+        // Now update the rest of the stuff
+        await dispatch("getLoggedInUserVaults");
+        await dispatch("loadKeepsForCurrentVault");
+
+      } catch (error) {
+        console.warn("store-modules > keeps.js > actions > deleteKeep()");
         console.error(error);
       }
     }

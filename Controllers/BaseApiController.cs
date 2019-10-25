@@ -98,6 +98,21 @@ namespace Keepr.Controllers
         return BadRequest(e.Message);
       }
     }
+
+    // [Authorize]
+    [HttpDelete("{id}")]
+    public virtual ActionResult<Boolean> Delete(int id)
+    {
+      try
+      {
+        _service.Delete(id);
+        return Ok(true);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
   }
 }
 

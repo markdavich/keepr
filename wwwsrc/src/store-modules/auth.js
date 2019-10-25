@@ -29,7 +29,7 @@ export default {
       try {
         let user = await AuthService.Register(creds)
         commit('setUser', user)
-        router.push({ name: "home" })
+        router.push({ name: "Home" })
       } catch (e) {
         console.warn(e.message)
       }
@@ -38,7 +38,7 @@ export default {
       try {
         let user = await AuthService.Login(creds)
         commit('setUser', user)
-        router.push({ name: "home" })
+        router.push({ name: "Home" })
       } catch (e) {
         console.warn(e.message)
       }

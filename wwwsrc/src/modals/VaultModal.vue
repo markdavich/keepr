@@ -36,7 +36,6 @@
     },
     methods: {
       save() {
-        debugger;
         // We need to add the keep to the vault if it exists
         // store-modules > vaults.js > state > newValutKeep: {}
         if (this.editing) {

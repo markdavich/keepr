@@ -23,7 +23,6 @@ export default new Router({
       name: 'Home',
       component: Home,
       beforeEnter(to, from, next) {
-        debugger;
         Store.dispatch("getLoggedInUserVaults");
         Store.dispatch("getAllKeeps");
         next();
@@ -62,6 +61,7 @@ export default new Router({
       props: true,
       beforeEnter(to, from, next) {
         Store.dispatch("getLoggedInUserVaults"); // store-modules > vaults.js
+        Store.dispatch("loadKeepsForCurrentVault");
         next();
       }
     }

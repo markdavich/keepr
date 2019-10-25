@@ -39,7 +39,7 @@
         },
         beforeCreate() {
             if (this.$store.state.Auth.user.user_id) {
-                this.$router.push({ name: "home" })
+                this.$router.push({ name: "Home" })
             }
         },
         methods: {

@@ -32,6 +32,13 @@ export default {
       state.keeps.splice(
         state.keeps.findIndex(keep => keep.keep_id === keep.keep_id), 1, keep
       );
+    },
+    deleteKeep(state, keep) {
+      let index = state.keeps.findIndex(k => k.keep_id == keep.keep_id);
+
+      if (index > -1) {
+        state.keeps.splice(index, 1);
+      }
     }
   },
   actions: {
@@ -85,9 +92,38 @@ export default {
       }
     },
 
-    setActiveKeepById({ commit, state }, keepId) {
+    async editKeep({ commit }, keep) {
       try {
+        let endPoint = `${keep.keep_id}`;
+        let axiosResponse = await api.put(endPoint, keep);
+        let newKeep = axiosResponse.data;
 
+        commit("editKeep", newKeep);
+        commit("setActiveKeep", newKeep);
+
+      } catch (error) {
+        console.warn("store-modules > keeps.js > actions > editKeep()");
+        console.error(error);
+      }
+    },
+
+    async deleteKeep({ commit }, keep) {
+      try {
+        let endPoint = `${keep.keep_id}`;
+        await api.delete(endPoint);
+
+        commit("deleteKeep", keep);
+        commit("setActiveKeep", null);
+
+      } catch (error) {
+        console.warn("store-modules > keeps.js > actions > deleteKeep()");
+        console.error(error);
+      }
+    },
+
+    async setActiveKeepById({ commit, state }, keepId) {
+      try {
+        // Quickly Show the user the keep
         let activeKeep = state.keeps.find(keep => {
           return keep.keep_id == keepId
         })
@@ -96,25 +132,39 @@ export default {
           commit("setActiveKeep", activeKeep);
         }
 
-        // let endPoint = `${keepId}/view`;
-        // let axiosResponse = await api.put(endPoint);
-        // if (axiosResponse) {
-        //   let keep = axiosResponse.data;
-        //   commit("setActiveKeep", keep);
-        // }
+        // Edit the keep on the server and reset the active keep
+        // so the user sees the keep count go up
+        let endPoint = `${keepId}/view`;
+        let axiosResponse = await api.put(endPoint);
+        if (axiosResponse) {
+          let keep = axiosResponse.data;
+          commit("setActiveKeep", keep);
+          commit("editKeep", keep); // This updates the keeps collection
+        }
       } catch (error) {
-        console.warn("store-modules > keeps.js > actions > setActiveKeep()");
+        console.warn("store-modules > keeps.js > actions > setActiveKeepById()");
         console.error(error);
       }
     },
 
-    getUserKeeps({ commit, rootState }) {
-      let userId = rootState.Auth.user.user_id;
-      let keeps = rootState.Keeps.keeps;
-      let userKeeps = keeps.filter(keep => {
-        return keep.user_id === userId;
-      });
-      commit("getAllKeeps", userKeeps);
+    async getUserKeeps({ commit, rootState }) {
+      try {
+        let userId = rootState.Auth.user.user_id;
+
+        let endPoint = `user`
+        let axiosResponse = await api.get(endPoint);
+        let keeps = axiosResponse.data;
+
+        // let keeps = rootState.Keeps.keeps;
+
+        let userKeeps = keeps.filter(keep => {
+          return keep.user_id === userId;
+        });
+        commit("getAllKeeps", userKeeps);
+      } catch (error) {
+        console.warn("store-modules > keeps.js > actions > getUserKeeps()");
+        console.error(error);
+      }
     },
 
     async createKeepInCurrentVault({ commit, dispatch, rootState }, keep) {
@@ -147,6 +197,7 @@ export default {
         // Reset the 
         rootState.Modal.addNewKeepToVault = false;
       } catch (error) {
+        console.warn("store-modules > keeps.js > actions > createKeepInCurrentVault()");
         console.error(error);
         rootState.Modal.addNewKeepToVault = false;
       }

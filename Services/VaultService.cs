@@ -27,5 +27,10 @@ namespace Keepr.Services
     {
       return _vaultRepo.GetByUserId(userId);
     }
+
+    internal void RemoveKeepFromVault(int vaultId, int keepId)
+    {
+      _vaultRepo.RemoveKeepFromVault(vaultId, keepId);
+    }
   }
 }

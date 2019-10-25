@@ -32,7 +32,7 @@
           width: `${this.slideWidth}px`
         };
 
-        let height = window.innerHeight - this.$store.state.Settings.display.navBarHeight;
+        let height = window.innerHeight - this.$store.state.Settings.display.navBarHeight - 75;
         this.slideOutContent = {
           width: `${this.slideWidth}px`,
           height: `${height}px`,

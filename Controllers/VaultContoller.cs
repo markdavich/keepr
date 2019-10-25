@@ -57,5 +57,19 @@ namespace Keepr.Controllers
         return BadRequest(e.Message);
       }
     }
+
+    [HttpDelete("{vaultId}/keeps/{keepId}")]
+    public ActionResult<Boolean> RemoveKeepFromVault(int vaultId, int keepId)
+    {
+      try
+      {
+        _vaultService.RemoveKeepFromVault(vaultId, keepId);
+        return Ok(true);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
   }
 }
