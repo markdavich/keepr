@@ -31,7 +31,7 @@
           modalUsage: this.MODAL_USAGE.VAULT,
           newValutKeep: this.keep
         }
-        this.$store.dispatch("showNewVaultForKeep", payload);
+        this.$store.dispatch("showCreateNewVaultForKeep", payload);
       },
       addKeepToVault(vaultId) {
         let vaultKeepMap = {

@@ -38,6 +38,7 @@ export default {
     async createKeep({ commit, dispatch, rootState }, keep) {
       try {
         let axiosResponse = await api.post("", keep);
+
         if (axiosResponse) {
           let keepId = axiosResponse.data;
 
@@ -143,13 +144,11 @@ export default {
         // Add the new keep to the keeps
         commit("createKeep", newKeep);
 
-
-
+        // Reset the 
         rootState.Modal.addNewKeepToVault = false;
-
-        // 
       } catch (error) {
-
+        console.error(error);
+        rootState.Modal.addNewKeepToVault = false;
       }
     }
   }

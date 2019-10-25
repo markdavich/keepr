@@ -30,38 +30,42 @@
           vault_name: "",
           vault_description: ""
         },
-        editing: false
+        editing: false,
+        newVaultForExistingKeep: false
       }
     },
     methods: {
       save() {
+        debugger;
         // We need to add the keep to the vault if it exists
         // store-modules > vaults.js > state > newValutKeep: {}
         if (this.editing) {
           alert("modals > methods > save: NOT IMPLEMENTED FOR EDITING A VAULT");
           // this.$store.dispatch("editVault", this.vault);
-        } else {
+        } else if (this.newVaultForExistingKeep) {
           let payload = {
             vault: this.data,
             keep: this.$store.state.Modal.newValutKeep
           }
           this.$store.dispatch("createVault", payload);
+        } else {
+          let payload = {
+            vault: this.data,
+            keep: null
+          }
+          this.$store.dispatch("createVault", payload);
         };
-
-        // if (this.hasKeep) {
-        //   alert("modals > methods > save: NOT IMPLEMENTED FOR ADDING KEEP TO NEW VAULT");
-        //   this.$store.dispatch("addKeepToVault", )
-        // }
 
         this.cancel();
       },
       cancel() {
-        this.$store.dispatch("closeNewVaultForKeep");
+        this.closeModal();
       }
     },
     mounted() {
       // Check if we are editing the current vault
-      this.editing = this.$store.state.Vaults.currentVault;
+      this.editing = this.$store.state.Modal.editingVault;
+      this.newVaultForExistingKeep = this.$store.state.Modal.newVaultForExistingKeep;
 
       if (this.editing) {
         let currentVault = this.$store.state.Vaults.currentVault;

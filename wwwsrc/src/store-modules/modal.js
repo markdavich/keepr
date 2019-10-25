@@ -2,8 +2,10 @@ export default {
   state: {
     modalUsage: 0,
     show: false,
+    newVaultForExistingKeep: false,
     newValutKeep: null, // This is an object {}
-    addNewKeepToVault: false
+    addNewKeepToVault: false,
+    editingVault: false
   },
 
   mutations: {
@@ -15,14 +17,14 @@ export default {
     closeModal(state) {
       state.modalUsage = 0;
       state.show = false;
-    },
-
-    showNewVaultForKeep(state, newValutKeep) {
-      state.newValutKeep = newValutKeep;
-    },
-
-    closeNewValultForKeep(state) {
+      state.newVaultForExistingKeep = false;
       state.newValutKeep = null;
+      state.addNewKeepToVault = false;
+    },
+
+    showCreateNewVaultForKeep(state, newValutKeep) {
+      state.newVaultForExistingKeep = true;
+      state.newValutKeep = newValutKeep;
     },
 
     showNewKeepForVault(state, modalUsage) {
@@ -41,17 +43,12 @@ export default {
       commit("closeModal");
     },
 
-    showNewVaultForKeep({ commit, dispatch }, payload) {
+    showCreateNewVaultForKeep({ commit, dispatch }, payload) {
       let modalUsage = payload.modalUsage;
       let newValutKeep = payload.newValutKeep;
 
-      commit("showNewVaultForKeep", newValutKeep);
+      commit("showCreateNewVaultForKeep", newValutKeep);
       dispatch("showModal", modalUsage);
-    },
-
-    closeNewVaultForKeep({ commit, dispatch }) {
-      commit("closeNewValultForKeep");
-      dispatch("closeModal");
     },
 
     showNewKeepForVault({ commit }, modalUsage) {
