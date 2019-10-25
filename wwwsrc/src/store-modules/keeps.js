@@ -135,13 +135,15 @@ export default {
         }
 
         // AddKeepToVault
-        dispatch("addKeepToVaultFromVaultsView", vaultKeepMap); // This dispatches getAllKeeps
+        await dispatch("addKeepToVaultFromVaultsView", vaultKeepMap); // This dispatches getAllKeeps
 
         // Get Logged in user vaults to update the count
-        dispatch("getLoggedInUserVaults");
+        await dispatch("getLoggedInUserVaults");
 
         // Add the new keep to the keeps
         commit("createKeep", newKeep);
+
+
 
         rootState.Modal.addNewKeepToVault = false;
 

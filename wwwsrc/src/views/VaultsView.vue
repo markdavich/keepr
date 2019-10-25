@@ -10,7 +10,7 @@
         <click-edit class="vault-name" :initialValue="vault.vault_name" :placeHolder="'Valut Name...'"
           :enterKeyPress="saveVaultName" v-if="current" />
         <div class="vault-keep-count">
-          {{ vault.vault_keep_count }} Keeps
+          {{ keepsCount }} Keeps
         </div>
       </div>
 
@@ -34,7 +34,8 @@
     data() {
       return {
         headerHeight: 0,
-        current: false
+        current: false,
+        keepsCount: 0
       }
     },
     computed: {
@@ -55,11 +56,13 @@
         setTimeout(() => {
           this.current = false;
           this.$forceUpdate();
+          this.keepsCount = null;
         }, 0);
 
         setTimeout(() => {
           this.current = true;
           this.$forceUpdate();
+          this.keepsCount = this.vault.vault_keep_count;
         }, 0);
       }
     },

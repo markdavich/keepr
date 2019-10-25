@@ -23,7 +23,8 @@ export default {
       state.currentUserVaults = currentUserVaults;
     },
     setActiveVault(state, currentVault) {
-      state.currentVault = currentVault;
+      Vue.set(state, 'currentVault', currentVault);
+      // state.currentVault = currentVault;
     },
     createVault(state, vault) {
       let vaults = [...state.currentUserVaults, vault];
@@ -63,10 +64,14 @@ export default {
         let endPoint = `user`;
         let axiosResponse = await api.get(endPoint);
         let currentUserVaults = axiosResponse.data;
+
         commit("setVaults", currentUserVaults);
 
         if (state.currentVault) {
-          commit("setActiveVault", state.currentVault);
+          let currentVault = state.currentUserVaults.find(vault => {
+            return vault.vault_id == state.currentVault.vault_id
+          })
+          commit("setActiveVault", currentVault);
         } else {
           commit("setActiveVault", state.currentUserVaults[0]);
         }
