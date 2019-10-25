@@ -1,7 +1,7 @@
 <template>
   <div :style="offsetTop" class="keeps-container">
     <div class="keeps-column" v-for="index in columnCount" :key="'keeps-array-' + index" v-if="columnCount">
-      <keep v-for="keep in columns[index - 1]" :key="keep.keep_id" :keep="keep" />
+      <keep v-for="keep in columns[index - 1]" :key="'keep-container-keep-' + keep.keep_id" :keep="keep" />
     </div>
   </div>
 </template>
