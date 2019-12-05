@@ -1,6 +1,6 @@
 <template>
   <div class="hide keep-info">
-    <keep-tags-button />
+    <keep-tags-button :keep="keep" />
     <keep-count :keep="keep" />
     <keep-view-count :keep="keep" />
     <div class="info-cut-left"></div>

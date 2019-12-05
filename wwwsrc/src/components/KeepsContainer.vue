@@ -12,10 +12,11 @@
   export default {
     name: 'keeps-container',
     props: {
-      // keeps: { type: Array, required: true },
+      keeps: { type: Array, required: true },
       parentId: { type: String, required: true },
       topOffset: 0
     },
+
     data() {
       return {
         columnCount: null,

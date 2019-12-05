@@ -29,9 +29,11 @@ export default {
       state.activeKeep = keep;
     },
     editKeep(state, keep) {
-      state.keeps.splice(
-        state.keeps.findIndex(keep => keep.keep_id === keep.keep_id), 1, keep
-      );
+      let keepId = keep.keep_id;
+      let keepIndex = state.keeps.findIndex(keep => {
+        return keep.keep_id == keepId
+      });
+      state.keeps.splice(keepIndex, 1, keep);
     },
     deleteKeep(state, keep) {
       let index = state.keeps.findIndex(k => k.keep_id == keep.keep_id);
@@ -100,7 +102,6 @@ export default {
 
         commit("editKeep", newKeep);
         commit("setActiveKeep", newKeep);
-
       } catch (error) {
         console.warn("store-modules > keeps.js > actions > editKeep()");
         console.error(error);

@@ -1,7 +1,7 @@
 <template>
   <!-- <button class="btn keep-tags-button" data-toggle="dropdown">0</button> -->
   <div class="keep-tags-button">
-    0
+    {{ keep.keep_id }}
     <!-- <button class="btn keep-tags" data-toggle="dropdown">Keep</button> -->
   </div>
 </template>
@@ -10,7 +10,9 @@
 <script>
   export default {
     name: 'keep-tags-button',
-    props: [],
+    props: {
+      keep: { type: Object, required: true }
+    },
     components: {},
     data() {
       return {}

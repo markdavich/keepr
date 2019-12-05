@@ -72,11 +72,11 @@
         return true
       },
       optionsClick() {
-        let activeKeep = Object.create(this.dynamicKeep);
+        let activeKeep = this.keep; // Object.create(this.dynamicKeep);
         this.$store.commit("setActiveKeep", activeKeep);
       },
       togglePublic() {
-        let keep = new Object.create(this.dynamicKeep);
+        let keep = this.keep; // new Object.create(this.dynamicKeep);
 
         let isPublic = keep.keep_is_public;
 
